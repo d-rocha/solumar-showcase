@@ -29,43 +29,43 @@ const productsPayload = JSON.stringify(
 );
 ---
 
-<!-- Lightbox Modal Container -->
+<!-- Lightbox Modal Container (Guaranteed NO scrollbar) -->
 <div
   id="enhanced-lightbox"
   role="dialog"
   aria-modal="true"
   aria-label="Galeria de fotos do produto"
-  class="pointer-events-none fixed inset-0 z-50 flex flex-col justify-between opacity-0 transition-opacity duration-300 bg-brand-navy/95 backdrop-blur-md"
+  class="pointer-events-none fixed inset-0 z-50 flex h-dvh max-h-dvh w-screen max-w-full flex-col overflow-hidden opacity-0 transition-opacity duration-300 bg-brand-navy/95 backdrop-blur-md select-none"
   data-products={productsPayload}
   data-whatsapp={whatsappNumber}
 >
   <!-- Top Bar Controls -->
-  <header class="relative z-20 flex items-center justify-between px-4 py-4 sm:px-6 border-b border-white/10 bg-brand-navy/80">
-    <div class="flex items-center gap-3">
-      <span class="rounded-full bg-brand-lime/20 px-3 py-1 text-xs font-bold text-brand-lime">
+  <header class="relative z-20 shrink-0 flex h-14 sm:h-16 items-center justify-between px-4 sm:px-6 border-b border-white/10 bg-brand-navy/90">
+    <div class="flex items-center gap-3 min-w-0">
+      <span class="shrink-0 rounded-full bg-brand-lime/20 px-3 py-1 text-xs font-bold text-brand-lime">
         <span id="lb-counter">1 de 1</span>
       </span>
-      <h3 id="lb-title" class="font-display text-base font-semibold text-white sm:text-xl truncate max-w-[200px] sm:max-w-md">
+      <h3 id="lb-title" class="font-display text-base font-semibold text-white sm:text-xl truncate max-w-[180px] sm:max-w-md">
         Produto
       </h3>
-      <span id="lb-price" class="hidden sm:inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-bold text-brand-lime">
+      <span id="lb-price" class="hidden sm:inline-block shrink-0 rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-bold text-brand-lime">
         R$ 0,00
       </span>
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 shrink-0">
       <!-- Zoom Toggle Button -->
       <button
         id="lb-zoom-btn"
         type="button"
         aria-label="Alternar zoom"
         title="Alternar Zoom"
-        class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:scale-105"
+        class="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:scale-105"
       >
-        <svg id="lb-zoom-in-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg id="lb-zoom-in-icon" class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
         </svg>
-        <svg id="lb-zoom-out-icon" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <svg id="lb-zoom-out-icon" class="hidden h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
         </svg>
       </button>
@@ -76,36 +76,36 @@ const productsPayload = JSON.stringify(
         type="button"
         aria-label="Fechar galeria (Esc)"
         title="Fechar (Esc)"
-        class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:scale-105"
+        class="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:scale-105"
       >
-        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <svg class="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
   </header>
 
-  <!-- Main Image Stage -->
-  <main class="relative flex flex-1 items-center justify-center overflow-hidden p-4 sm:p-8">
+  <!-- Main Image Stage (Strictly overflow-hidden) -->
+  <main class="relative flex flex-1 min-h-0 w-full items-center justify-center overflow-hidden p-2 sm:p-4">
     <!-- Prev Button -->
     <button
       id="lb-prev-btn"
       type="button"
       aria-label="Foto anterior (Seta esquerda)"
-      class="absolute left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-brand-navy/70 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all hover:bg-brand-navy hover:scale-110 sm:left-8"
+      class="absolute left-2 sm:left-6 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-brand-navy/70 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all hover:bg-brand-navy hover:scale-110"
     >
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <svg class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
       </svg>
     </button>
 
-    <!-- Image Viewport -->
-    <div id="lb-viewport" class="relative flex h-full w-full items-center justify-center overflow-auto cursor-grab active:cursor-grabbing">
+    <!-- Image Viewport (Zero Scrollbars) -->
+    <div id="lb-viewport" class="relative flex h-full w-full items-center justify-center overflow-hidden cursor-zoom-in">
       <img
         id="lb-image"
         src=""
         alt="Foto do produto ampliada"
-        class="max-h-[70vh] sm:max-h-[75vh] w-auto max-w-full select-none object-contain transition-transform duration-300 drop-shadow-2xl"
+        class="max-h-[50vh] sm:max-h-[56vh] md:max-h-[58vh] max-w-[86vw] sm:max-w-[78vw] w-auto h-auto select-none object-contain transition-transform duration-300 drop-shadow-2xl"
       />
     </div>
 
@@ -114,25 +114,29 @@ const productsPayload = JSON.stringify(
       id="lb-next-btn"
       type="button"
       aria-label="Próxima foto (Seta direita)"
-      class="absolute right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-brand-navy/70 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all hover:bg-brand-navy hover:scale-110 sm:right-8"
+      class="absolute right-2 sm:right-6 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-brand-navy/70 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all hover:bg-brand-navy hover:scale-110"
     >
-      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <svg class="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
         <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
       </svg>
     </button>
   </main>
 
-  <!-- Bottom Strip & Action Area -->
-  <footer class="relative z-20 flex flex-col items-center gap-3 border-t border-white/10 bg-brand-navy/85 px-4 py-4 sm:px-6 sm:py-5 backdrop-blur-md">
-    <!-- Thumbnails carousel -->
-    <div id="lb-thumbnails" class="flex max-w-xl items-center gap-2 overflow-x-auto no-scrollbar py-1">
+  <!-- Bottom Strip & Action Area (Compact, shrink-0, zero scrollbar) -->
+  <footer class="relative z-20 shrink-0 flex flex-col items-center gap-2 border-t border-white/10 bg-brand-navy/90 px-4 py-2.5 sm:px-6 sm:py-3 backdrop-blur-md">
+    <!-- Thumbnails carousel with hidden scrollbar -->
+    <div
+      id="lb-thumbnails"
+      class="lb-thumbs-no-scroll flex max-w-xl items-center justify-center gap-2 overflow-x-auto py-1"
+      style="-ms-overflow-style: none; scrollbar-width: none;"
+    >
       <!-- Injected via JavaScript -->
     </div>
 
     <!-- Product Details and Direct WhatsApp Link -->
-    <div class="flex w-full max-w-2xl flex-col items-center justify-between gap-3 sm:flex-row">
-      <div class="text-center sm:text-left">
-        <p id="lb-bottom-details" class="text-xs text-brand-sand/80 max-w-md line-clamp-1">
+    <div class="flex w-full max-w-2xl items-center justify-between gap-3">
+      <div class="text-left min-w-0 flex-1">
+        <p id="lb-bottom-details" class="text-xs text-brand-sand/80 truncate">
           Material impermeável, fácil de limpar
         </p>
       </div>
@@ -142,16 +146,30 @@ const productsPayload = JSON.stringify(
         href="#"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 rounded-full bg-brand-lime px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-navy shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[#b0f56e] hover:shadow-glow-lime"
+        class="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-brand-lime px-5 py-2 text-xs font-bold uppercase tracking-wider text-brand-navy shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[#b0f56e] hover:shadow-glow-lime"
       >
-        <svg class="h-4 w-4 fill-current" viewBox="0 0 32 32">
-          <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.3-1.9A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.4 1.1 1.2-4.3-.3-.4A11.6 11.6 0 1 1 16 27.5zm6.4-8.6c-.3-.2-2-.9-2.3-1s-.6-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9 9 0 0 1-2.6-1.6 10 10 0 0 1-1.8-2.3c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.3-.4.4-.6s0-.4 0-.6-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5s-1.5 1.5-1.5 3.6 1.6 4.1 1.8 4.4c.2.3 3.1 4.7 7.5 6.6 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2-.8 2.3-1.6s.3-1.5.2-1.6c-.1-.2-.4-.3-.7-.5z"/>
+        <svg class="h-3.5 w-3.5 shrink-0 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.45.06-.68.32-.23.25-.89.87-.89 2.12s.91 2.46 1.04 2.63c.13.17 1.79 2.74 4.34 3.84.61.26 1.08.42 1.45.54.61.19 1.17.17 1.61.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.12-.22-.19-.47-.32"/>
         </svg>
-        <span>Pedir no WhatsApp</span>
+        <span class="leading-none">Pedir no WhatsApp</span>
       </a>
     </div>
   </footer>
 </div>
+
+<style>
+  /* Suppress scrollbars across all browsers in lightbox */
+  #enhanced-lightbox,
+  #enhanced-lightbox * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  #enhanced-lightbox *::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+</style>
 
 <script>
   interface ClientProduct {
@@ -197,18 +215,13 @@ const productsPayload = JSON.stringify(
     // Helper: update modal contents
     function renderCurrentView() {
       if (!currentProduct || currentProduct.images.length === 0) return;
-
       const total = currentProduct.images.length;
       const src = currentProduct.images[currentImageIndex];
 
       if (imgEl) {
         imgEl.src = src;
         imgEl.alt = `${currentProduct.title} - Foto ${currentImageIndex + 1}`;
-        if (isZoomed) {
-          imgEl.style.transform = 'scale(1.75)';
-        } else {
-          imgEl.style.transform = 'scale(1)';
-        }
+        imgEl.style.transform = isZoomed ? 'scale(1.45)' : 'scale(1)';
       }
 
       if (titleEl) titleEl.textContent = currentProduct.title;
@@ -255,8 +268,8 @@ const productsPayload = JSON.stringify(
             const btn = document.createElement('button');
             btn.type = 'button';
             btn.setAttribute('aria-label', `Ir para foto ${idx + 1}`);
-            btn.className = `relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border-2 transition-all p-0.5 bg-brand-navy/60 ${
-              idx === currentImageIndex ? 'border-brand-lime scale-110 shadow-glow-lime' : 'border-white/20 opacity-50 hover:opacity-100'
+            btn.className = `relative h-10 w-10 sm:h-11 sm:w-11 shrink-0 overflow-hidden rounded-xl border-2 transition-all p-0.5 bg-brand-navy/60 ${
+              idx === currentImageIndex ? 'border-brand-lime scale-105 shadow-glow-lime' : 'border-white/20 opacity-50 hover:opacity-100'
             }`;
             const tImg = document.createElement('img');
             tImg.src = thumbSrc;
@@ -302,12 +315,14 @@ const productsPayload = JSON.stringify(
       modal?.classList.remove('pointer-events-none', 'opacity-0');
       modal?.classList.add('opacity-100');
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
     }
 
     function closeModal() {
       modal?.classList.add('pointer-events-none', 'opacity-0');
       modal?.classList.remove('opacity-100');
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       isZoomed = false;
       updateZoomIcons();
       if (imgEl) imgEl.style.transform = 'scale(1)';
@@ -333,7 +348,7 @@ const productsPayload = JSON.stringify(
       isZoomed = !isZoomed;
       updateZoomIcons();
       if (imgEl) {
-        imgEl.style.transform = isZoomed ? 'scale(1.75)' : 'scale(1)';
+        imgEl.style.transform = isZoomed ? 'scale(1.45)' : 'scale(1)';
       }
     }
 
