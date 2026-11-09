@@ -526,10 +526,11 @@
         gap: 16px !important;
       }
 
-      /* Desktop Collection Top Header Container matching grid */
+      /* Desktop Collection Top Header Container matching grid (No background, No box-shadow) */
       div[class*="CollectionTopContainer"],
       div[class*="CollectionTopContainer-card-card-cardTop-cardTop"],
       div[class*="ei8nkzc4"],
+      div[class*="cardTop"],
       div[class*="CollectionTop"],
       div[class*="CollectionHeader"],
       div[class*="TopBar"] {
@@ -539,6 +540,10 @@
         padding: 0 !important;
         box-sizing: border-box !important;
         display: block !important;
+        background: transparent !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border: none !important;
       }
 
       div[class*="CollectionTopRow"],
@@ -645,6 +650,23 @@
         box-sizing: border-box !important;
       }
 
+      /* ViewControls (Preview Eye Toggle Button): Integrated into Editor Toolbar */
+      div[class*="ViewControls"],
+      div[class*="e1nx103k0"] {
+        position: fixed !important;
+        top: 70px !important;
+        right: calc((100vw - 1280px) / 2 + 20px) !important;
+        z-index: 99995 !important;
+        margin: 0 !important;
+      }
+
+      @media (max-width: 1320px) {
+        div[class*="ViewControls"],
+        div[class*="e1nx103k0"] {
+          right: 20px !important;
+        }
+      }
+
       div[class*="Editor"],
       div[class*="e1nx103k4"] {
         width: 100% !important;
@@ -661,8 +683,7 @@
         position: relative !important;
         width: 100% !important;
         height: auto !important;
-        display: flex !important;
-        flex-direction: column !important;
+        display: block !important;
         overflow: visible !important;
       }
 
@@ -672,7 +693,7 @@
         display: none !important;
       }
 
-      /* Form Pane (Pane1): full width within 1280px, centered */
+      /* Form Pane (Pane1): full width within 1280px, centered, ALWAYS visible */
       div[class*="Pane1"],
       div.Pane1 {
         width: 100% !important;
@@ -680,7 +701,7 @@
         position: relative !important;
         height: auto !important;
         overflow: visible !important;
-        flex: 1 1 auto !important;
+        display: block !important;
       }
 
       /* Control Pane Container: Centered max-width for optimal form editing with comfortable spacing */
@@ -691,31 +712,21 @@
         margin: 0 auto !important;
         padding: 24px 0 100px 0 !important;
         box-sizing: border-box !important;
+        display: block !important;
       }
 
       /* =========================================================
-         MODAL PREVIEW FOR EDITOR (OPENS ON PREVIEW BUTTON CLICK)
+         MODAL PREVIEW FOR PRODUCT CARD (OPENS ONLY ON PREVIEW BUTTON)
          ========================================================= */
-      /* By default: Live Preview (Pane2) is hidden from page layout */
-      body:not(.solumar-preview-modal-open) .Pane2,
-      body:not(.solumar-preview-modal-open) div[class*="PreviewPaneContainer"],
-      body:not(.solumar-preview-modal-open) div[class*="e1nx103k3"] {
-        display: none !important;
-      }
-
-      /* When modal is open: Pane2 becomes full screen overlay */
-      body.solumar-preview-modal-open {
-        overflow: hidden !important;
-      }
-
-      body.solumar-preview-modal-open .Pane2 {
-        display: flex !important;
+      div[class*="Pane2"],
+      div.Pane2 {
         position: fixed !important;
         inset: 0 !important;
         z-index: 150000 !important;
         background: rgba(13, 18, 36, 0.75) !important;
         backdrop-filter: blur(8px) !important;
         -webkit-backdrop-filter: blur(8px) !important;
+        display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         padding: 24px !important;
@@ -725,23 +736,38 @@
         animation: previewFadeIn 0.25s ease !important;
       }
 
-      body.solumar-preview-modal-open div[class*="PreviewPaneContainer"],
-      body.solumar-preview-modal-open div[class*="e1nx103k3"] {
-        display: block !important;
+      div[class*="Pane2"] > div,
+      div.Pane2 > div {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
         position: relative !important;
         width: 100% !important;
-        max-width: 900px !important;
-        max-height: 88vh !important;
+        max-width: 480px !important;
         height: auto !important;
-        min-height: 480px !important;
+        max-height: 88vh !important;
+        min-height: 420px !important;
         background: #ffffff !important;
         border-radius: 28px !important;
         box-shadow: 0 25px 60px -15px rgba(13, 18, 36, 0.5) !important;
         border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        overflow-y: auto !important;
-        padding: 40px 32px 32px 32px !important;
+        overflow: hidden !important;
+        padding: 0 !important;
         box-sizing: border-box !important;
         animation: previewPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      div[class*="Pane2"] iframe,
+      div.Pane2 iframe {
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 520px !important;
+        max-height: 85vh !important;
+        border: none !important;
+        border-radius: 28px !important;
+        display: block !important;
+        background: #f8fafc !important;
       }
 
       @keyframes previewFadeIn {
@@ -2549,36 +2575,54 @@
       }
 
       // =========================================================
-      // 5. LIVE PREVIEW MODAL CONTROLLER
+      // 5. LIVE PREVIEW MODAL CONTROLLER & DEFAULT VIEW
       // =========================================================
+      function ensureDefaultFormView() {
+        const hash = window.location.hash || '';
+        if (hash.includes('/entries/') || hash.endsWith('/new')) {
+          if (!document.body.classList.contains('solumar-preview-modal-open')) {
+            try {
+              localStorage.setItem('cms.right-pane', 'none');
+            } catch (e) {}
+          }
+        }
+      }
+
       function initPreviewModalController() {
         const closeBtn = document.getElementById('solumar-preview-close-btn');
 
-        function openModal() {
-          document.body.classList.add('solumar-preview-modal-open');
+        function getToggleBtn() {
+          return document.querySelector(
+            'button[class*="EditorToggle"], button[class*="e1nx103k8"], button[title*="pré-visualização" i], button[title*="visualização" i], button[title*="preview" i]'
+          );
         }
 
         function closeModal() {
+          const toggleBtn = getToggleBtn();
+          if (toggleBtn) {
+            toggleBtn.click();
+          }
           document.body.classList.remove('solumar-preview-modal-open');
         }
 
-        closeBtn?.addEventListener('click', closeModal);
+        closeBtn?.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          closeModal();
+        });
 
-        // Intercept clicks on the preview toggle button (Eye button in Decap editor)
-        document.addEventListener('click', (e) => {
-          const toggleBtn = e.target.closest(
-            'button[class*="EditorToggle"], button[class*="e1nx103k8"], button[title*="pré-visualização" i], button[title*="visualização" i], button[title*="preview" i]'
-          );
-          if (toggleBtn) {
-            e.preventDefault();
-            e.stopPropagation();
-            if (document.body.classList.contains('solumar-preview-modal-open')) {
-              closeModal();
-            } else {
-              openModal();
-            }
+        // Sync body class with existence of .Pane2 in DOM
+        function checkPane2() {
+          const pane2 = document.querySelector('.Pane2');
+          if (pane2 && window.getComputedStyle(pane2).display !== 'none') {
+            document.body.classList.add('solumar-preview-modal-open');
+          } else {
+            document.body.classList.remove('solumar-preview-modal-open');
           }
-        }, true);
+        }
+
+        const observer = new MutationObserver(checkPane2);
+        observer.observe(document.body, { childList: true, subtree: true });
 
         // Close on clicking backdrop (clicking outside preview container)
         document.addEventListener('click', (e) => {
@@ -2597,10 +2641,12 @@
           }
         });
 
-        // Close modal on hash change
         window.addEventListener('hashchange', () => {
-          closeModal();
+          ensureDefaultFormView();
+          document.body.classList.remove('solumar-preview-modal-open');
         });
+
+        ensureDefaultFormView();
       }
 
       function bootAdminEnhancements() {
@@ -2618,62 +2664,67 @@
       }
 
       // =========================================================
-      // 5. DECAP CMS PREVIEW COMPONENT
+      // 6. DECAP CMS PREVIEW COMPONENT
       // =========================================================
       if (window.CMS) {
         window.CMS.registerPreviewStyle('/backoffice/preview.css');
 
-        const ProductPreview = createReactClass({
-          render: function() {
-            const entry = this.props.entry;
-            const title = entry.getIn(['data', 'title']) || 'Nome do Produto';
-            const tagline = entry.getIn(['data', 'tagline']) || 'Subtítulo curto do produto';
-            const price = entry.getIn(['data', 'price']) || '';
-            const category = entry.getIn(['data', 'category']) || 'Bolsas';
-            const badge = entry.getIn(['data', 'badge']) || '';
-            const imageList = entry.getIn(['data', 'images']);
-            const detailsList = entry.getIn(['data', 'details']);
+        const createClass = window.createClass || window.createReactClass;
+        const h = window.h;
 
-            let primaryImage = '';
-            if (imageList && imageList.size > 0) {
-              const first = imageList.get(0);
-              const rawImg = typeof first === 'string' ? first : first.get('image');
-              primaryImage = this.props.getAsset(rawImg);
-            }
+        if (typeof createClass === 'function' && typeof h === 'function') {
+          const ProductPreview = createClass({
+            render: function() {
+              const entry = this.props.entry;
+              const title = entry.getIn(['data', 'title']) || 'Nome do Produto';
+              const tagline = entry.getIn(['data', 'tagline']) || 'Subtítulo curto do produto';
+              const price = entry.getIn(['data', 'price']) || '';
+              const category = entry.getIn(['data', 'category']) || 'Bolsas';
+              const badge = entry.getIn(['data', 'badge']) || '';
+              const imageList = entry.getIn(['data', 'images']);
+              const detailsList = entry.getIn(['data', 'details']);
 
-            return h('div', { className: 'preview-container' },
-              h('div', { className: 'preview-badge-header' },
-                'Pré-visualização do Card · Solumar DS'
-              ),
-              h('div', { className: 'preview-card' },
-                h('div', { className: 'preview-image-box' },
-                  primaryImage
-                    ? h('img', { src: primaryImage.toString(), alt: title })
-                    : h('div', { style: { color: '#9ca3af', fontSize: '13px' } }, 'Nenhuma imagem selecionada')
+              let primaryImage = '';
+              if (imageList && imageList.size > 0) {
+                const first = imageList.get(0);
+                const rawImg = typeof first === 'string' ? first : (first.get ? first.get('image') : first);
+                primaryImage = this.props.getAsset(rawImg);
+              }
+
+              return h('div', { className: 'preview-container' },
+                h('div', { className: 'preview-badge-header' },
+                  'Pré-visualização do Card · Solumar DS'
                 ),
-                h('div', { className: 'preview-body' },
-                  h('span', { className: 'preview-category' }, category),
-                  h('h3', { className: 'preview-title' }, title),
-                  h('p', { className: 'preview-tagline' }, tagline),
-                  price ? h('span', { className: 'preview-price' }, price) : null,
-                  detailsList && detailsList.size > 0
-                    ? h('ul', { className: 'preview-details' },
-                        detailsList.map(function(item, idx) {
-                          const text = typeof item === 'string' ? item : (item.get ? item.get('detail') : item);
-                          return h('li', { key: idx }, text);
-                        })
-                      )
-                    : null,
-                  h('div', { className: 'preview-cta' },
-                    'Pedir no WhatsApp'
+                h('div', { className: 'preview-card' },
+                  h('div', { className: 'preview-image-box' },
+                    primaryImage
+                      ? h('img', { src: primaryImage.toString(), alt: title })
+                      : h('div', { style: { color: '#9ca3af', fontSize: '13px' } }, 'Nenhuma imagem selecionada')
+                  ),
+                  h('div', { className: 'preview-body' },
+                    h('span', { className: 'preview-category' }, category),
+                    h('h3', { className: 'preview-title' }, title),
+                    h('p', { className: 'preview-tagline' }, tagline),
+                    price ? h('span', { className: 'preview-price' }, price) : null,
+                    detailsList && detailsList.size > 0
+                      ? h('ul', { className: 'preview-details' },
+                          detailsList.map(function(item, idx) {
+                            const text = typeof item === 'string' ? item : (item.get ? item.get('detail') : item);
+                            return h('li', { key: idx }, text);
+                          })
+                        )
+                      : null,
+                    h('div', { className: 'preview-cta' },
+                      'Pedir no WhatsApp'
+                    )
                   )
                 )
-              )
-            );
-          }
-        });
+              );
+            }
+          });
 
-        window.CMS.registerPreviewTemplate('products', ProductPreview);
+          window.CMS.registerPreviewTemplate('products', ProductPreview);
+        }
       }
 
       // Netlify Identity Redirection Handler
