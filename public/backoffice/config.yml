@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: nxt-door/solumar-showcase
+  repo: d-rocha/solumar-showcase
   branch: production
   auth_endpoint: api/auth
 
