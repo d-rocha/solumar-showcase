@@ -1,0 +1,65 @@
+{
+  "siteName": "Solumar sports & lifestyle",
+  "tagline": "Catálogo Digital de Bolsas e Viseiras",
+  "description": "Catálogo digital Solumar sports & lifestyle: bolsas, mini shoulders, malas esportivas e viseiras feitas para quem vive em movimento. Peça pelo WhatsApp e receba em todo o Brasil.",
+  "phone": "(22) 99725-8528",
+  "whatsappNumber": "5522997258528",
+  "defaultMessage": "Olá, Solumar! Vi o catálogo digital e quero tirar uma dúvida.",
+  "instagramHandle": "@solu.mar",
+  "instagramUrl": "https://instagram.com/solu.mar",
+  "location": "Cabo Frio · Rio de Janeiro",
+  "announcement": "Catálogo digital 2026",
+  "hero": {
+    "badge": "Catálogo digital 2026",
+    "title": "Esporte, estilo e liberdade",
+    "subtitle": "Bolsas, mini shoulders, malas esportivas e viseiras feitas para quem vive em movimento. De Cabo Frio para todo o Brasil.",
+    "image": "/images/hero-canoa.jpg",
+    "highlights": [
+      {
+        "icon": "truck",
+        "text": "Entregamos para todo o Brasil"
+      },
+      {
+        "icon": "map-pin",
+        "text": "Cabo Frio · Rio de Janeiro"
+      },
+      {
+        "icon": "droplets",
+        "text": "Materiais resistentes à água e areia"
+      }
+    ]
+  },
+  "personalized": {
+    "badge": "Sob medida",
+    "title": "Personalizados para a sua equipe",
+    "description": "Viseiras e bonés com a identidade do seu time, evento ou empresa. Sublimação total, bordado e acabamento premium.",
+    "items": [
+      {
+        "title": "Viseira",
+        "rows": [
+          "Pedido mínimo: 30 unidades",
+          "Valores sob consulta"
+        ]
+      },
+      {
+        "title": "Boné",
+        "rows": [
+          "Pedido mínimo: 30 unidades",
+          "Valores sob consulta"
+        ]
+      }
+    ],
+    "notice": "Prazo de entrega: 30 dias úteis · Pagamento: 50% no pedido e 50% na entrega.",
+    "ctaText": "Pedir orçamento",
+    "gallery": [
+      "/images/pers-viseira.jpg",
+      "/images/pers-bone.jpg",
+      "/images/pers-trucker.jpg"
+    ]
+  },
+  "cta": {
+    "title": "Gostou de algum modelo?",
+    "description": "Chame a gente no WhatsApp para conferir cores disponíveis, formas de pagamento e frete para a sua cidade.",
+    "buttonText": "(22) 99725-8528"
+  }
+}

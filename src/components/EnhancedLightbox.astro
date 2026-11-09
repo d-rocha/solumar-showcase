@@ -1,0 +1,398 @@
+---
+interface Product {
+  id: string;
+  title: string;
+  tagline: string;
+  price?: string;
+  category: string;
+  images: string[];
+  details: string[];
+}
+
+interface Props {
+  products: Product[];
+  whatsappNumber: string;
+}
+
+const { products, whatsappNumber } = Astro.props;
+
+// Pass JSON data safely to client script
+const productsPayload = JSON.stringify(
+  products.map((p) => ({
+    id: p.id,
+    title: p.title,
+    price: p.price || '',
+    category: p.category,
+    images: p.images,
+    details: p.details,
+  }))
+);
+---
+
+<!-- Lightbox Modal Container -->
+<div
+  id="enhanced-lightbox"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Galeria de fotos do produto"
+  class="pointer-events-none fixed inset-0 z-50 flex flex-col justify-between opacity-0 transition-opacity duration-300 bg-brand-navy/95 backdrop-blur-md"
+  data-products={productsPayload}
+  data-whatsapp={whatsappNumber}
+>
+  <!-- Top Bar Controls -->
+  <header class="relative z-20 flex items-center justify-between px-4 py-4 sm:px-6 border-b border-white/10 bg-brand-navy/80">
+    <div class="flex items-center gap-3">
+      <span class="rounded-full bg-brand-lime/20 px-3 py-1 text-xs font-bold text-brand-lime">
+        <span id="lb-counter">1 de 1</span>
+      </span>
+      <h3 id="lb-title" class="font-display text-base font-semibold text-white sm:text-xl truncate max-w-[200px] sm:max-w-md">
+        Produto
+      </h3>
+      <span id="lb-price" class="hidden sm:inline-block rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-bold text-brand-lime">
+        R$ 0,00
+      </span>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- Zoom Toggle Button -->
+      <button
+        id="lb-zoom-btn"
+        type="button"
+        aria-label="Alternar zoom"
+        title="Alternar Zoom"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:scale-105"
+      >
+        <svg id="lb-zoom-in-icon" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+        </svg>
+        <svg id="lb-zoom-out-icon" class="hidden h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM13 10H7" />
+        </svg>
+      </button>
+
+      <!-- Close Button -->
+      <button
+        id="lb-close-btn"
+        type="button"
+        aria-label="Fechar galeria (Esc)"
+        title="Fechar (Esc)"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-all hover:bg-white/20 hover:scale-105"
+      >
+        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Image Stage -->
+  <main class="relative flex flex-1 items-center justify-center overflow-hidden p-4 sm:p-8">
+    <!-- Prev Button -->
+    <button
+      id="lb-prev-btn"
+      type="button"
+      aria-label="Foto anterior (Seta esquerda)"
+      class="absolute left-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-brand-navy/70 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all hover:bg-brand-navy hover:scale-110 sm:left-8"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <!-- Image Viewport -->
+    <div id="lb-viewport" class="relative flex h-full w-full items-center justify-center overflow-auto cursor-grab active:cursor-grabbing">
+      <img
+        id="lb-image"
+        src=""
+        alt="Foto do produto ampliada"
+        class="max-h-[70vh] sm:max-h-[75vh] w-auto max-w-full select-none object-contain transition-transform duration-300 drop-shadow-2xl"
+      />
+    </div>
+
+    <!-- Next Button -->
+    <button
+      id="lb-next-btn"
+      type="button"
+      aria-label="Próxima foto (Seta direita)"
+      class="absolute right-4 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-brand-navy/70 border border-white/20 text-white shadow-xl backdrop-blur-md transition-all hover:bg-brand-navy hover:scale-110 sm:right-8"
+    >
+      <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </main>
+
+  <!-- Bottom Strip & Action Area -->
+  <footer class="relative z-20 flex flex-col items-center gap-3 border-t border-white/10 bg-brand-navy/85 px-4 py-4 sm:px-6 sm:py-5 backdrop-blur-md">
+    <!-- Thumbnails carousel -->
+    <div id="lb-thumbnails" class="flex max-w-xl items-center gap-2 overflow-x-auto no-scrollbar py-1">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- Product Details and Direct WhatsApp Link -->
+    <div class="flex w-full max-w-2xl flex-col items-center justify-between gap-3 sm:flex-row">
+      <div class="text-center sm:text-left">
+        <p id="lb-bottom-details" class="text-xs text-brand-sand/80 max-w-md line-clamp-1">
+          Material impermeável, fácil de limpar
+        </p>
+      </div>
+
+      <a
+        id="lb-whatsapp-link"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 rounded-full bg-brand-lime px-6 py-2.5 text-xs font-bold uppercase tracking-wider text-brand-navy shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[#b0f56e] hover:shadow-glow-lime"
+      >
+        <svg class="h-4 w-4 fill-current" viewBox="0 0 32 32">
+          <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.3-1.9A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.4 1.1 1.2-4.3-.3-.4A11.6 11.6 0 1 1 16 27.5zm6.4-8.6c-.3-.2-2-.9-2.3-1s-.6-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9 9 0 0 1-2.6-1.6 10 10 0 0 1-1.8-2.3c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.3-.4.4-.6s0-.4 0-.6-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5s-1.5 1.5-1.5 3.6 1.6 4.1 1.8 4.4c.2.3 3.1 4.7 7.5 6.6 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2-.8 2.3-1.6s.3-1.5.2-1.6c-.1-.2-.4-.3-.7-.5z"/>
+        </svg>
+        <span>Pedir no WhatsApp</span>
+      </a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  interface ClientProduct {
+    id: string;
+    title: string;
+    price: string;
+    category: string;
+    images: string[];
+    details: string[];
+  }
+
+  function initEnhancedLightbox() {
+    const modal = document.getElementById('enhanced-lightbox');
+    if (!modal) return;
+
+    const rawData = modal.getAttribute('data-products') || '[]';
+    const whatsappNumber = modal.getAttribute('data-whatsapp') || '5522997258528';
+    let products: ClientProduct[] = [];
+    try {
+      products = JSON.parse(rawData);
+    } catch (e) {
+      console.error('Failed to parse products payload for lightbox:', e);
+    }
+
+    const imgEl = document.getElementById('lb-image') as HTMLImageElement;
+    const titleEl = document.getElementById('lb-title');
+    const priceEl = document.getElementById('lb-price');
+    const counterEl = document.getElementById('lb-counter');
+    const detailsEl = document.getElementById('lb-bottom-details');
+    const waLinkEl = document.getElementById('lb-whatsapp-link') as HTMLAnchorElement;
+    const thumbsContainer = document.getElementById('lb-thumbnails');
+    const closeBtn = document.getElementById('lb-close-btn');
+    const prevBtn = document.getElementById('lb-prev-btn');
+    const nextBtn = document.getElementById('lb-next-btn');
+    const zoomBtn = document.getElementById('lb-zoom-btn');
+    const zoomInIcon = document.getElementById('lb-zoom-in-icon');
+    const zoomOutIcon = document.getElementById('lb-zoom-out-icon');
+
+    let currentProduct: ClientProduct | null = null;
+    let currentImageIndex = 0;
+    let isZoomed = false;
+
+    // Helper: update modal contents
+    function renderCurrentView() {
+      if (!currentProduct || currentProduct.images.length === 0) return;
+
+      const total = currentProduct.images.length;
+      const src = currentProduct.images[currentImageIndex];
+
+      if (imgEl) {
+        imgEl.src = src;
+        imgEl.alt = `${currentProduct.title} - Foto ${currentImageIndex + 1}`;
+        if (isZoomed) {
+          imgEl.style.transform = 'scale(1.75)';
+        } else {
+          imgEl.style.transform = 'scale(1)';
+        }
+      }
+
+      if (titleEl) titleEl.textContent = currentProduct.title;
+      if (priceEl) {
+        if (currentProduct.price) {
+          priceEl.textContent = currentProduct.price;
+          priceEl.classList.remove('hidden');
+        } else {
+          priceEl.classList.add('hidden');
+        }
+      }
+
+      if (counterEl) {
+        counterEl.textContent = `${currentImageIndex + 1} de ${total}`;
+      }
+
+      if (detailsEl) {
+        detailsEl.textContent = currentProduct.details.join(' · ');
+      }
+
+      if (waLinkEl) {
+        const msg = encodeURIComponent(
+          `Olá, Solumar! Estou vendo a foto ${currentImageIndex + 1} de ${currentProduct.title}${currentProduct.price ? ` (${currentProduct.price})` : ''} e tenho interesse.`
+        );
+        waLinkEl.href = `https://wa.me/${whatsappNumber}?text=${msg}`;
+      }
+
+      // Prev / Next button visibility
+      if (prevBtn && nextBtn) {
+        if (total <= 1) {
+          prevBtn.classList.add('hidden');
+          nextBtn.classList.add('hidden');
+        } else {
+          prevBtn.classList.remove('hidden');
+          nextBtn.classList.remove('hidden');
+        }
+      }
+
+      // Render thumbnail items
+      if (thumbsContainer) {
+        thumbsContainer.innerHTML = '';
+        if (total > 1) {
+          currentProduct.images.forEach((thumbSrc, idx) => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.setAttribute('aria-label', `Ir para foto ${idx + 1}`);
+            btn.className = `relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border-2 transition-all p-0.5 bg-brand-navy/60 ${
+              idx === currentImageIndex ? 'border-brand-lime scale-110 shadow-glow-lime' : 'border-white/20 opacity-50 hover:opacity-100'
+            }`;
+            const tImg = document.createElement('img');
+            tImg.src = thumbSrc;
+            tImg.alt = `Miniatura ${idx + 1}`;
+            tImg.className = 'h-full w-full object-contain';
+            btn.appendChild(tImg);
+            btn.addEventListener('click', () => {
+              currentImageIndex = idx;
+              isZoomed = false;
+              updateZoomIcons();
+              renderCurrentView();
+            });
+            thumbsContainer.appendChild(btn);
+          });
+          thumbsContainer.classList.remove('hidden');
+        } else {
+          thumbsContainer.classList.add('hidden');
+        }
+      }
+    }
+
+    function updateZoomIcons() {
+      if (isZoomed) {
+        zoomInIcon?.classList.add('hidden');
+        zoomOutIcon?.classList.remove('hidden');
+      } else {
+        zoomInIcon?.classList.remove('hidden');
+        zoomOutIcon?.classList.add('hidden');
+      }
+    }
+
+    function openModal(productId: string, initialIndex = 0) {
+      const prod = products.find((p) => p.id === productId);
+      if (!prod) return;
+
+      currentProduct = prod;
+      currentImageIndex = initialIndex < prod.images.length ? initialIndex : 0;
+      isZoomed = false;
+      updateZoomIcons();
+
+      renderCurrentView();
+
+      modal?.classList.remove('pointer-events-none', 'opacity-0');
+      modal?.classList.add('opacity-100');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal?.classList.add('pointer-events-none', 'opacity-0');
+      modal?.classList.remove('opacity-100');
+      document.body.style.overflow = '';
+      isZoomed = false;
+      updateZoomIcons();
+      if (imgEl) imgEl.style.transform = 'scale(1)';
+    }
+
+    function nextImage() {
+      if (!currentProduct || currentProduct.images.length <= 1) return;
+      currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
+      isZoomed = false;
+      updateZoomIcons();
+      renderCurrentView();
+    }
+
+    function prevImage() {
+      if (!currentProduct || currentProduct.images.length <= 1) return;
+      currentImageIndex = (currentImageIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+      isZoomed = false;
+      updateZoomIcons();
+      renderCurrentView();
+    }
+
+    function toggleZoom() {
+      isZoomed = !isZoomed;
+      updateZoomIcons();
+      if (imgEl) {
+        imgEl.style.transform = isZoomed ? 'scale(1.75)' : 'scale(1)';
+      }
+    }
+
+    // Attach click events on triggers across page
+    document.querySelectorAll('[data-open-lightbox]').forEach((trigger) => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const pId = trigger.getAttribute('data-open-lightbox');
+        const imgIdx = parseInt(trigger.getAttribute('data-img-index') || '0', 10);
+        if (pId) openModal(pId, imgIdx);
+      });
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+    prevBtn?.addEventListener('click', prevImage);
+    nextBtn?.addEventListener('click', nextImage);
+    zoomBtn?.addEventListener('click', toggleZoom);
+
+    // Click on image toggles zoom
+    imgEl?.addEventListener('click', toggleZoom);
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (modal?.classList.contains('opacity-0')) return;
+      if (e.key === 'Escape') closeModal();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    });
+
+    // Touch Swipe Navigation for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const viewport = document.getElementById('lb-viewport');
+
+    viewport?.addEventListener(
+      'touchstart',
+      (e: TouchEvent) => {
+        touchStartX = e.changedTouches[0].screenX;
+      },
+      { passive: true }
+    );
+
+    viewport?.addEventListener(
+      'touchend',
+      (e: TouchEvent) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchEndX - touchStartX;
+        if (Math.abs(diff) > 50) {
+          if (diff < 0) {
+            nextImage();
+          } else {
+            prevImage();
+          }
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  initEnhancedLightbox();
+  document.addEventListener('astro:page-load', initEnhancedLightbox);
+</script>

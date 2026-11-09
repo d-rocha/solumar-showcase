@@ -1,0 +1,47 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  phone: string;
+  whatsappUrl: string;
+  location: string;
+}
+
+const { title, description, phone, whatsappUrl, location } = Astro.props;
+---
+
+<section id="contato" class="py-20 sm:py-28 bg-white border-t border-neutral-100 scroll-mt-20">
+  <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+    <div class="inline-flex items-center gap-2 rounded-full bg-brand-accent/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-brand-accent mb-4">
+      <span>Atendimento Direto</span>
+    </div>
+
+    <h2 class="font-display text-3xl font-semibold text-brand-navy sm:text-5xl">
+      {title}
+    </h2>
+
+    <p class="mx-auto mt-4 max-w-xl text-base leading-relaxed text-neutral-600 sm:text-lg">
+      {description}
+    </p>
+
+    <!-- WhatsApp Big CTA Button -->
+    <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-3 rounded-full bg-brand-lime px-8 py-4 text-base font-bold text-brand-navy shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[#b0f56e] hover:shadow-glow-lime"
+      >
+        <svg class="h-5 w-5 fill-current" viewBox="0 0 32 32">
+          <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.3-1.9A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.4 1.1 1.2-4.3-.3-.4A11.6 11.6 0 1 1 16 27.5zm6.4-8.6c-.3-.2-2-.9-2.3-1s-.6-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9 9 0 0 1-2.6-1.6 10 10 0 0 1-1.8-2.3c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.3-.4.4-.6s0-.4 0-.6-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5s-1.5 1.5-1.5 3.6 1.6 4.1 1.8 4.4c.2.3 3.1 4.7 7.5 6.6 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2-.8 2.3-1.6s.3-1.5.2-1.6c-.1-.2-.4-.3-.7-.5z"/>
+        </svg>
+        <span>{phone}</span>
+      </a>
+    </div>
+
+    <!-- Location & Delivery info -->
+    <p class="mt-6 text-xs text-neutral-400">
+      Envio seguro para todo o território nacional direto de {location}.
+    </p>
+  </div>
+</section>

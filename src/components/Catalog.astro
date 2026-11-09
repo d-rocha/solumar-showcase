@@ -1,0 +1,276 @@
+---
+interface Product {
+  id: string;
+  title: string;
+  tagline: string;
+  price?: string;
+  category: string;
+  badge?: string | null;
+  order: number;
+  featured?: boolean;
+  images: string[];
+  details: string[];
+}
+
+interface Props {
+  products: Product[];
+  whatsappNumber: string;
+}
+
+const { products, whatsappNumber } = Astro.props;
+
+// Sort by order
+const sortedProducts = [...products].sort((a, b) => a.order - b.order);
+
+// Category counts
+const countAll = sortedProducts.length;
+const countBolsas = sortedProducts.filter((p) => p.category === 'Bolsas').length;
+const countViseiras = sortedProducts.filter((p) => p.category === 'Viseiras & Bonés').length;
+---
+
+<section id="catalogo" class="py-20 sm:py-28 bg-[#FAFAF8] scroll-mt-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Header with Tabs -->
+    <div class="flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-[0.25em] text-brand-accent">
+          Coleção 2026
+        </p>
+        <h2 class="font-display mt-2 text-3xl font-semibold text-brand-navy sm:text-5xl">
+          Nosso catálogo
+        </h2>
+        <p class="mt-3 text-base text-neutral-600 max-w-md">
+          Modelos exclusivos desenvolvidos com materiais leves, duráveis e à prova d'água.
+        </p>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex flex-wrap items-center gap-2 rounded-2xl bg-neutral-100 p-1.5 border border-neutral-200">
+        <button
+          type="button"
+          data-category="Todos"
+          class="cat-filter-btn flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 bg-brand-navy text-white shadow-soft"
+        >
+          <span>Todos</span>
+          <span class="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">{countAll}</span>
+        </button>
+        <button
+          type="button"
+          data-category="Bolsas"
+          class="cat-filter-btn flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-brand-navy/70 hover:text-brand-navy hover:bg-white/60"
+        >
+          <span>Bolsas</span>
+          <span class="rounded-full bg-neutral-200 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">{countBolsas}</span>
+        </button>
+        <button
+          type="button"
+          data-category="Viseiras & Bonés"
+          class="cat-filter-btn flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-brand-navy/70 hover:text-brand-navy hover:bg-white/60"
+        >
+          <span>Viseiras & Bonés</span>
+          <span class="rounded-full bg-neutral-200 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">{countViseiras}</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div id="product-grid" class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {sortedProducts.map((product) => {
+        const primaryImage = product.images[0] || '/images/hero-canoa.jpg';
+        const waMsg = encodeURIComponent(`Olá, Solumar! Tenho interesse no modelo: ${product.title}${product.price ? ` (${product.price})` : ''}. Pode me passar mais informações?`);
+        const productWaUrl = `https://wa.me/${whatsappNumber}?text=${waMsg}`;
+
+        return (
+          <article
+            data-category={product.category}
+            data-product-id={product.id}
+            class="product-card group flex flex-col overflow-hidden rounded-3xl border border-neutral-200/90 bg-white shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card-soft"
+          >
+            <!-- Card Image Area -->
+            <div class="relative aspect-4/5 w-full overflow-hidden bg-neutral-100">
+              <!-- Main Image (Click opens Lightbox) -->
+              <button
+                type="button"
+                data-open-lightbox={product.id}
+                data-img-index="0"
+                aria-label={`Ampliar fotos de ${product.title}`}
+                class="lightbox-trigger block h-full w-full cursor-zoom-in text-left focus:outline-none"
+              >
+                <img
+                  id={`card-img-${product.id}`}
+                  src={primaryImage}
+                  alt={product.title}
+                  loading="lazy"
+                  class="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                />
+              </button>
+
+              <!-- Zoom pill on hover -->
+              <div class="pointer-events-none absolute bottom-4 right-4 flex h-10 w-10 items-center justify-center rounded-full bg-brand-navy/80 text-brand-lime opacity-0 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100 group-hover:scale-105 shadow-md">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                </svg>
+              </div>
+
+              <!-- Badges Area (Top Left) -->
+              <div class="pointer-events-none absolute left-4 top-4 flex flex-col items-start gap-2">
+                {product.badge && (
+                  <span class="inline-flex items-center gap-1.5 rounded-full bg-brand-lime px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-brand-navy shadow-sm">
+                    <span class="h-1.5 w-1.5 rounded-full bg-brand-navy"></span>
+                    {product.badge}
+                  </span>
+                )}
+                {product.price && (
+                  <span class="rounded-full bg-brand-navy px-3.5 py-1 text-xs font-bold text-brand-lime shadow-sm">
+                    {product.price}
+                  </span>
+                )}
+              </div>
+
+              <!-- Multi-image counter pill -->
+              {product.images.length > 1 && (
+                <span class="pointer-events-none absolute bottom-4 left-4 rounded-full bg-white/80 backdrop-blur-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-brand-navy border border-neutral-200">
+                  {product.images.length} fotos
+                </span>
+              )}
+            </div>
+
+            <!-- Thumbnail switcher (if more than 1 image) -->
+            {product.images.length > 1 && (
+              <div class="flex items-center gap-2 overflow-x-auto px-5 pt-3 no-scrollbar">
+                {product.images.map((img, idx) => (
+                  <button
+                    type="button"
+                    data-switch-img={product.id}
+                    data-img-src={img}
+                    data-img-index={idx}
+                    aria-label={`Ver foto ${idx + 1} de ${product.title}`}
+                    class={`card-thumb-btn relative h-11 w-11 shrink-0 overflow-hidden rounded-xl border-2 transition-all p-0.5 bg-neutral-50 ${idx === 0 ? 'border-brand-navy scale-105' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                  >
+                    <img src={img} alt={`${product.title} miniatura ${idx + 1}`} class="h-full w-full object-contain" />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <!-- Card Body -->
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent">
+                  {product.category}
+                </span>
+                {product.images.length > 1 && (
+                  <button
+                    type="button"
+                    data-open-lightbox={product.id}
+                    class="text-xs font-medium text-neutral-400 hover:text-brand-navy transition-colors"
+                  >
+                    Ver galeria completa →
+                  </button>
+                )}
+              </div>
+
+              <h3 class="font-display mt-2 text-2xl font-bold text-brand-navy">
+                {product.title}
+              </h3>
+
+              <p class="mt-1 text-sm font-medium text-neutral-600">
+                {product.tagline}
+              </p>
+
+              <!-- Feature Bullets -->
+              <ul class="mt-4 space-y-2 border-t border-neutral-100 pt-4 text-xs leading-relaxed text-neutral-600">
+                {product.details.map((detail) => (
+                  <li class="flex items-start gap-2">
+                    <svg class="h-4 w-4 shrink-0 text-brand-accent mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <!-- Bottom CTA -->
+              <div class="mt-auto pt-6">
+                <a
+                  href={productWaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-navy py-3 text-center text-sm font-bold text-brand-lime shadow-soft transition-all duration-300 hover:scale-[1.02] hover:bg-brand-primary-dark hover:shadow-card-soft"
+                >
+                  <svg class="h-4 w-4 fill-current" viewBox="0 0 32 32">
+                    <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.3-1.9A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.4 1.1 1.2-4.3-.3-.4A11.6 11.6 0 1 1 16 27.5zm6.4-8.6c-.3-.2-2-.9-2.3-1s-.6-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9 9 0 0 1-2.6-1.6 10 10 0 0 1-1.8-2.3c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.3-.4.4-.6s0-.4 0-.6-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5s-1.5 1.5-1.5 3.6 1.6 4.1 1.8 4.4c.2.3 3.1 4.7 7.5 6.6 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2-.8 2.3-1.6s.3-1.5.2-1.6c-.1-.2-.4-.3-.7-.5z"/>
+                  </svg>
+                  <span>Pedir no WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupCatalogInteractions() {
+    // 1. Category filter tabs
+    const filterButtons = document.querySelectorAll('.cat-filter-btn');
+    const cards = document.querySelectorAll('.product-card');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const targetCat = btn.getAttribute('data-category');
+
+        // Style active button
+        filterButtons.forEach((b) => {
+          b.classList.remove('bg-brand-navy', 'text-white', 'shadow-soft');
+          b.classList.add('text-brand-navy/70', 'hover:bg-white/60');
+        });
+        btn.classList.add('bg-brand-navy', 'text-white', 'shadow-soft');
+        btn.classList.remove('text-brand-navy/70', 'hover:bg-white/60');
+
+        // Filter cards
+        cards.forEach((card) => {
+          const cardCat = card.getAttribute('data-category');
+          if (targetCat === 'Todos' || cardCat === targetCat) {
+            (card as HTMLElement).style.display = 'flex';
+          } else {
+            (card as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 2. Thumbnail card switcher
+    const thumbButtons = document.querySelectorAll('.card-thumb-btn');
+    thumbButtons.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const prodId = thumb.getAttribute('data-switch-img');
+        const src = thumb.getAttribute('data-img-src');
+        const imgIndex = thumb.getAttribute('data-img-index');
+        const mainImg = document.getElementById(`card-img-${prodId}`) as HTMLImageElement;
+        const trigger = thumb.closest('.product-card')?.querySelector('.lightbox-trigger');
+
+        if (mainImg && src) {
+          mainImg.src = src;
+        }
+        if (trigger && imgIndex) {
+          trigger.setAttribute('data-img-index', imgIndex);
+        }
+
+        // Highlight active thumb
+        const siblingThumbs = thumb.parentElement?.querySelectorAll('.card-thumb-btn');
+        siblingThumbs?.forEach((st) => {
+          st.classList.remove('border-brand-navy', 'scale-105', 'opacity-100');
+          st.classList.add('border-transparent', 'opacity-60');
+        });
+        thumb.classList.add('border-brand-navy', 'scale-105', 'opacity-100');
+        thumb.classList.remove('border-transparent', 'opacity-60');
+      });
+    });
+  }
+
+  setupCatalogInteractions();
+  document.addEventListener('astro:page-load', setupCatalogInteractions);
+</script>

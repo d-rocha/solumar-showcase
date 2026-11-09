@@ -1,0 +1,101 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Enable local backend proxy for local editing (npx decap-server)
+local_backend: true
+
+media_folder: "public/images"
+public_folder: "/images"
+
+locale: "pt"
+
+collections:
+  - name: "products"
+    label: "Produtos do Catálogo"
+    label_singular: "Produto"
+    folder: "src/content/products"
+    create: true
+    slug: "{{order}}-{{id}}"
+    summary: "{{title}} ({{category}}) - {{price}}"
+    sortable_fields: ["order", "title", "price"]
+    fields:
+      - { label: "Identificador (ID)", name: "id", widget: "string", hint: "Slug único, ex: mala-esportiva" }
+      - { label: "Nome do Produto", name: "title", widget: "string" }
+      - { label: "Subtítulo / Chamada", name: "tagline", widget: "string" }
+      - { label: "Preço", name: "price", widget: "string", required: false, hint: "Ex: R$ 199,90" }
+      - { label: "Categoria", name: "category", widget: "select", options: ["Bolsas", "Viseiras & Bonés"] }
+      - { label: "Selo de Destaque", name: "badge", widget: "string", required: false, hint: "Ex: Lançamento" }
+      - { label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", default: 1 }
+      - { label: "Destaque na Página", name: "featured", widget: "boolean", default: false }
+      - label: "Galeria de Imagens"
+        name: "images"
+        widget: "list"
+        summary: "{{fields.image}}"
+        field: { label: "Imagem", name: "image", widget: "image" }
+      - label: "Diferenciais / Especificações"
+        name: "details"
+        widget: "list"
+        field: { label: "Item", name: "detail", widget: "string" }
+      - { label: "Descrição Extra", name: "body", widget: "markdown", required: false }
+
+  - name: "settings"
+    label: "Configurações da Vitrine"
+    files:
+      - file: "src/content/settings/site.json"
+        name: "site"
+        label: "Textos Gerais e Contato"
+        fields:
+          - { label: "Nome da Marca", name: "siteName", widget: "string" }
+          - { label: "Título da Vitrine", name: "tagline", widget: "string" }
+          - { label: "Descrição SEO", name: "description", widget: "text" }
+          - { label: "Telefone Visível", name: "phone", widget: "string" }
+          - { label: "Número do WhatsApp", name: "whatsappNumber", widget: "string", hint: "Ex: 5522997258528" }
+          - { label: "Mensagem Padrão do WhatsApp", name: "defaultMessage", widget: "string" }
+          - { label: "Perfil Instagram", name: "instagramHandle", widget: "string" }
+          - { label: "Link Instagram", name: "instagramUrl", widget: "string" }
+          - { label: "Localização", name: "location", widget: "string" }
+          - { label: "Aviso de Destaque", name: "announcement", widget: "string" }
+          - label: "Seção Principal (Hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Selo Superior", name: "badge", widget: "string" }
+              - { label: "Título Principal", name: "title", widget: "string" }
+              - { label: "Texto de Apoio", name: "subtitle", widget: "text" }
+              - { label: "Imagem de Fundo", name: "image", widget: "image" }
+              - label: "Diferenciais do Topo"
+                name: "highlights"
+                widget: "list"
+                fields:
+                  - { label: "Ícone (truck, map-pin, droplets)", name: "icon", widget: "string" }
+                  - { label: "Texto", name: "text", widget: "string" }
+          - label: "Seção de Personalizados"
+            name: "personalized"
+            widget: "object"
+            fields:
+              - { label: "Selo Superior", name: "badge", widget: "string" }
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Descrição", name: "description", widget: "text" }
+              - label: "Opções de Produtos"
+                name: "items"
+                widget: "list"
+                fields:
+                  - { label: "Título", name: "title", widget: "string" }
+                  - label: "Itens / Regras"
+                    name: "rows"
+                    widget: "list"
+                    field: { label: "Regra", name: "row", widget: "string" }
+              - { label: "Aviso de Prazo e Pagamento", name: "notice", widget: "string" }
+              - { label: "Texto do Botão WhatsApp", name: "ctaText", widget: "string" }
+              - label: "Fotos de Amostra"
+                name: "gallery"
+                widget: "list"
+                field: { label: "Imagem", name: "image", widget: "image" }
+          - label: "Chamada de Fechamento (CTA)"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "Título", name: "title", widget: "string" }
+              - { label: "Descrição", name: "description", widget: "text" }
+              - { label: "Texto do Botão", name: "buttonText", widget: "string" }

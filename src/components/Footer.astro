@@ -1,0 +1,66 @@
+---
+interface Props {
+  siteName: string;
+  instagramHandle: string;
+  instagramUrl: string;
+  whatsappUrl: string;
+  phone: string;
+  location: string;
+}
+
+const { siteName, instagramHandle, instagramUrl, whatsappUrl, phone, location } = Astro.props;
+---
+
+<footer class="border-t border-neutral-200 bg-white py-12 text-sm text-neutral-600">
+  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 sm:flex-row sm:px-6 lg:px-8">
+    <!-- Brand -->
+    <div class="flex flex-col items-center sm:items-start gap-2">
+      <div class="flex items-center gap-3">
+        <img src="/logo.png" alt={siteName} class="h-10 w-auto" />
+        <span class="font-display font-bold text-brand-navy text-lg">Solumar</span>
+      </div>
+      <p class="text-xs text-neutral-500">
+        Sports & Lifestyle · {location}
+      </p>
+    </div>
+
+    <!-- Links -->
+    <div class="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold uppercase tracking-wider text-neutral-500">
+      <a href="#catalogo" class="hover:text-brand-navy transition-colors">
+        Catálogo
+      </a>
+      <a href="#personalizados" class="hover:text-brand-navy transition-colors">
+        Personalizados
+      </a>
+      <a
+        href={instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-brand-navy transition-colors flex items-center gap-1"
+      >
+        <span>Instagram</span>
+      </a>
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:text-brand-navy transition-colors flex items-center gap-1 text-emerald-600 font-bold"
+      >
+        <span>WhatsApp</span>
+      </a>
+      <a
+        href="/admin/"
+        class="text-neutral-400 hover:text-brand-navy transition-colors"
+        title="Painel Decap CMS"
+      >
+        Decap CMS
+      </a>
+    </div>
+
+    <!-- Copyright -->
+    <div class="text-center sm:text-right text-xs text-neutral-400">
+      <p>© {new Date().getFullYear()} {siteName}.</p>
+      <p class="mt-0.5">Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>

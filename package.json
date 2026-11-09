@@ -1,0 +1,23 @@
+{
+  "name": "solumar-vitrine",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "cms:proxy": "decap-server",
+    "dev:all": "decap-server & astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@lucide/astro": "^1.70.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "astro": "^7.4.8",
+    "decap-server": "^3.11.6",
+    "tailwindcss": "^4.3.5"
+  }
+}

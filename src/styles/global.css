@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #171D36;
+  --color-brand-primary-dark: #141C34;
+  --color-brand-secondary: #BDFA80;
+  --color-brand-accent: #3DB3C2;
+  --color-brand-accent-dark: #448C9D;
+  --color-brand-sand: #F7F5F0;
+  --color-brand-navy: #171D36;
+  --color-brand-lime: #BDFA80;
+  --color-brand-teal: #3DB3C2;
+
+  --color-neutral-25: #F5F5F4;
+  --color-neutral-50: #ECECEC;
+  --color-neutral-100: #CDCDCB;
+  --color-neutral-200: #B8B8B7;
+  --color-neutral-300: #A4A4A2;
+  --color-neutral-400: #90908E;
+  --color-neutral-500: #7C7C79;
+  --color-neutral-600: #676765;
+  --color-neutral-700: #525251;
+  --color-neutral-800: #3C3C3B;
+  --color-neutral-900: #292929;
+
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    color: #171D36;
+    background-color: #FAFAF8;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Custom soft shadow matching DS */
+.shadow-soft {
+  box-shadow: 0 4px 20px -2px rgba(23, 29, 54, 0.08);
+}
+
+.shadow-card-soft {
+  box-shadow: 0 12px 32px -4px rgba(23, 29, 54, 0.12);
+}
+
+.shadow-glow-lime {
+  box-shadow: 0 0 24px -2px rgba(189, 250, 128, 0.45);
+}
+
+/* Custom scrollbar for horizontal thumbnail strips */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

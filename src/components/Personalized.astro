@@ -1,0 +1,116 @@
+---
+interface Props {
+  badge: string;
+  title: string;
+  description: string;
+  items: Array<{
+    title: string;
+    rows: string[];
+  }>;
+  notice: string;
+  ctaText: string;
+  gallery: string[];
+  whatsappNumber: string;
+}
+
+const { badge, title, description, items, notice, ctaText, gallery, whatsappNumber } = Astro.props;
+const waMsg = encodeURIComponent("Olá, Solumar! Quero um orçamento de viseiras/bonés personalizados para minha equipe/evento.");
+const waUrl = `https://wa.me/${whatsappNumber}?text=${waMsg}`;
+---
+
+<section id="personalizados" class="relative overflow-hidden bg-brand-navy py-20 text-white sm:py-28 scroll-mt-20">
+  <!-- Subtle decorative background gradient -->
+  <div class="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full bg-brand-accent/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute -left-40 -bottom-40 h-96 w-96 rounded-full bg-brand-lime/10 blur-3xl"></div>
+
+  <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+      <!-- Left Column: Copy & Rules -->
+      <div class="lg:col-span-6">
+        <span class="inline-flex items-center gap-1.5 rounded-full border border-brand-lime/30 bg-white/5 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-brand-lime">
+          {badge}
+        </span>
+
+        <h2 class="font-display mt-4 text-3xl font-semibold sm:text-5xl lg:leading-tight">
+          {title}
+        </h2>
+
+        <p class="mt-4 text-base leading-relaxed text-brand-sand/80 sm:text-lg">
+          {description}
+        </p>
+
+        <!-- Product Cards -->
+        <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {items.map((it) => (
+            <div class="rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm transition-all hover:border-brand-lime/30 hover:bg-white/10">
+              <h3 class="font-display text-2xl font-bold text-brand-lime">
+                {it.title}
+              </h3>
+              <ul class="mt-3 space-y-2 text-xs leading-relaxed text-brand-sand/80">
+                {it.rows.map((r) => (
+                  <li class="flex items-center gap-2">
+                    <span class="h-1.5 w-1.5 rounded-full bg-brand-lime"></span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        <!-- Terms / Notice -->
+        <p class="mt-6 text-xs text-brand-sand/65">
+          {notice}
+        </p>
+
+        <!-- CTA Button -->
+        <div class="mt-8">
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-full bg-brand-lime px-8 py-3.5 text-sm font-bold text-brand-navy shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[#b0f56e] hover:shadow-glow-lime"
+          >
+            <svg class="h-4 w-4 fill-current" viewBox="0 0 32 32">
+              <path d="M16 2a13.9 13.9 0 0 0-12 21L2 30l7.3-1.9A13.9 13.9 0 1 0 16 2zm0 25.5a11.5 11.5 0 0 1-5.9-1.6l-.4-.3-4.4 1.1 1.2-4.3-.3-.4A11.6 11.6 0 1 1 16 27.5zm6.4-8.6c-.3-.2-2-.9-2.3-1s-.6-.2-.8.2-.9 1.1-1.1 1.3-.4.2-.7.1a9 9 0 0 1-2.6-1.6 10 10 0 0 1-1.8-2.3c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.3-.4.4-.6s0-.4 0-.6-.8-2-1.1-2.7c-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.7.1-1.1.5s-1.5 1.5-1.5 3.6 1.6 4.1 1.8 4.4c.2.3 3.1 4.7 7.5 6.6 1 .4 1.8.7 2.5.9 1.1.3 2 .3 2.8.2.9-.1 2-.8 2.3-1.6s.3-1.5.2-1.6c-.1-.2-.4-.3-.7-.5z"/>
+            </svg>
+            <span>{ctaText}</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Column: Gallery Grid -->
+      <div class="lg:col-span-6">
+        <div class="grid grid-cols-2 gap-4">
+          {gallery.map((img, idx) => (
+            <div
+              class={`group relative overflow-hidden rounded-3xl border border-white/10 bg-neutral-900 shadow-xl ${
+                idx === 0 ? 'col-span-2 aspect-16/10' : 'aspect-square'
+              }`}
+            >
+              <button
+                type="button"
+                data-open-lightbox="personalizados"
+                data-img-index={idx}
+                aria-label={`Ampliar foto ${idx + 1} de personalizados`}
+                class="block h-full w-full cursor-zoom-in text-left focus:outline-none"
+              >
+                <img
+                  src={img}
+                  alt={`Personalizados Solumar ${idx + 1}`}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </button>
+              <div class="pointer-events-none absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-brand-navy/70 text-brand-lime opacity-0 backdrop-blur-sm transition-all group-hover:opacity-100 group-hover:scale-105">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7" />
+                </svg>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
