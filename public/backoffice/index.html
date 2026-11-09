@@ -569,9 +569,40 @@
         list-style: none !important;
       }
 
-      /* Editor Page: 1280px max width and centered */
-      div[class*="EditorContainer"] {
+      /* Move Collection Controls (View toggle and Sort by) to the right in desktop */
+      div[class*="CollectionControlsContainer"],
+      div[class*="emfmed70"] {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        margin-left: auto !important;
         width: 100% !important;
+        gap: 12px !important;
+        margin-top: 8px !important;
+        margin-bottom: 16px !important;
+        box-sizing: border-box !important;
+      }
+
+      div[class*="ViewControlsSection"],
+      div[class*="evv1i7c1"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        margin: 0 !important;
+      }
+
+      /* =========================================================
+         EDITOR LAYOUT: 1280px CENTERED & FORM FULL WIDTH
+         ========================================================= */
+      div[class*="EditorContainer"],
+      div[class*="e1nx103k5"] {
+        width: 100% !important;
+        position: relative !important;
+        top: 0 !important;
+        left: 0 !important;
+        min-height: calc(100vh - 58px) !important;
+        background-color: #f8fafc !important;
+        padding-top: 0 !important;
         box-sizing: border-box !important;
       }
 
@@ -582,15 +613,154 @@
         margin: 0 auto !important;
         padding: 0 16px !important;
         box-sizing: border-box !important;
+        height: auto !important;
+        min-height: calc(100vh - 120px) !important;
       }
 
+      /* SplitPane in Editor: override 50/50 split so form is full 1280px centered */
+      div[class*="SplitPane"],
+      div.SplitPane {
+        position: relative !important;
+        width: 100% !important;
+        height: auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        overflow: visible !important;
+      }
+
+      /* Hide the vertical resizer divider */
+      div[class*="Resizer"],
+      div.Resizer {
+        display: none !important;
+      }
+
+      /* Form Pane (Pane1): full width within 1280px, centered */
+      div[class*="Pane1"],
+      div.Pane1 {
+        width: 100% !important;
+        max-width: 100% !important;
+        position: relative !important;
+        height: auto !important;
+        overflow: visible !important;
+        flex: 1 1 auto !important;
+      }
+
+      /* Control Pane Container: Centered max-width for optimal form editing */
+      div[class*="ControlPaneContainer"],
+      div[class*="e11hw0lx4"] {
+        width: 100% !important;
+        max-width: 860px !important;
+        margin: 0 auto !important;
+        padding: 24px 0 80px 0 !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Toolbar: sticky inside 1280px width */
       div[class*="EditorToolbar"],
       div[class*="ToolbarContainer"] {
+        position: sticky !important;
+        top: 58px !important;
+        z-index: 100 !important;
         width: 100% !important;
         max-width: 1280px !important;
         margin: 0 auto !important;
-        padding: 8px 16px !important;
+        padding: 10px 16px !important;
         box-sizing: border-box !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid var(--solumar-border) !important;
+      }
+
+      /* =========================================================
+         MODAL PREVIEW FOR EDITOR (OPENS ON PREVIEW BUTTON CLICK)
+         ========================================================= */
+      /* By default: Live Preview (Pane2) is hidden from page layout */
+      body:not(.solumar-preview-modal-open) .Pane2,
+      body:not(.solumar-preview-modal-open) div[class*="PreviewPaneContainer"],
+      body:not(.solumar-preview-modal-open) div[class*="e1nx103k3"] {
+        display: none !important;
+      }
+
+      /* When modal is open: Pane2 becomes full screen overlay */
+      body.solumar-preview-modal-open {
+        overflow: hidden !important;
+      }
+
+      body.solumar-preview-modal-open .Pane2 {
+        display: flex !important;
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: 150000 !important;
+        background: rgba(13, 18, 36, 0.75) !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 24px !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        box-sizing: border-box !important;
+        animation: previewFadeIn 0.25s ease !important;
+      }
+
+      body.solumar-preview-modal-open div[class*="PreviewPaneContainer"],
+      body.solumar-preview-modal-open div[class*="e1nx103k3"] {
+        display: block !important;
+        position: relative !important;
+        width: 100% !important;
+        max-width: 900px !important;
+        max-height: 88vh !important;
+        height: auto !important;
+        min-height: 480px !important;
+        background: #ffffff !important;
+        border-radius: 28px !important;
+        box-shadow: 0 25px 60px -15px rgba(13, 18, 36, 0.5) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        overflow-y: auto !important;
+        padding: 40px 32px 32px 32px !important;
+        box-sizing: border-box !important;
+        animation: previewPop 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      @keyframes previewFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      @keyframes previewPop {
+        from { opacity: 0; transform: scale(0.96) translateY(12px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      /* Floating Close Button for Preview Modal */
+      #solumar-preview-close-btn {
+        position: fixed;
+        top: 24px;
+        right: 28px;
+        z-index: 150002;
+        display: none;
+        align-items: center;
+        gap: 8px;
+        background: #ffffff;
+        color: var(--solumar-navy);
+        border: 1.5px solid rgba(23, 29, 54, 0.15);
+        padding: 10px 20px;
+        border-radius: 9999px;
+        font-family: var(--font-sans);
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        transition: all 0.2s ease;
+      }
+
+      body.solumar-preview-modal-open #solumar-preview-close-btn {
+        display: inline-flex !important;
+      }
+
+      #solumar-preview-close-btn:hover {
+        background: var(--solumar-lime);
+        border-color: var(--solumar-lime);
+        transform: scale(1.04);
       }
 
       /* Decap CMS Cards & List Items */
@@ -660,7 +830,7 @@
       }
 
       /* =========================================================
-         COMPACT IMAGE PREVIEWS IN EDITOR / PRODUCT CREATION
+         COMPACT THUMBNAILS IN EDITOR / PRODUCT CREATION (NO SCROLL, NO CUTOFF)
          ========================================================= */
       div[class*="ControlPane"] img,
       div[class*="ImageWrapper"] img,
@@ -669,32 +839,43 @@
       div[class*="ObjectWidget"] img,
       div[class*="ListControl"] img,
       div[class*="ImageCard"] img,
-      div[class*="ImagePreview"] img {
-        max-height: 150px !important;
-        max-width: 220px !important;
-        width: auto !important;
-        height: auto !important;
-        object-fit: contain !important;
-        border-radius: 12px !important;
-        border: 1.5px solid #e2e8f0 !important;
+      div[class*="ImagePreview"] img,
+      div[class*="Field"] img {
+        width: 96px !important;
+        height: 96px !important;
+        min-width: 96px !important;
+        min-height: 96px !important;
+        max-width: 96px !important;
+        max-height: 96px !important;
+        object-fit: cover !important;
+        border-radius: 14px !important;
+        border: 2px solid #e2e8f0 !important;
         background-color: #f8fafc !important;
-        padding: 6px !important;
-        box-shadow: 0 4px 14px rgba(23, 29, 54, 0.06) !important;
+        padding: 4px !important;
+        box-shadow: 0 4px 12px rgba(23, 29, 54, 0.08) !important;
         display: block !important;
-        margin-top: 8px !important;
-        margin-bottom: 8px !important;
-        transition: transform 0.2s ease !important;
+        margin: 8px 0 !important;
+        overflow: hidden !important;
+        transition: transform 0.2s ease, border-color 0.2s ease !important;
       }
 
       div[class*="ControlPane"] img:hover,
       div[class*="ImageWrapper"] img:hover {
-        transform: scale(1.03) !important;
+        transform: scale(1.05) !important;
+        border-color: var(--solumar-teal) !important;
       }
 
+      /* Eliminate container overflow / horizontal scrollbars on image wrappers */
       div[class*="ImageWrapper"],
       div[class*="FileWidget"],
+      div[class*="FileWidgetButton"],
       div[class*="ImageCard"] {
-        max-width: 260px !important;
+        max-width: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        border: none !important;
       }
 
       /* Form Inputs & Fields */
@@ -1774,6 +1955,12 @@
       <span>Voltar ao topo</span>
     </button>
 
+    <!-- Floating Close Button for Live Preview Modal -->
+    <button id="solumar-preview-close-btn" type="button" aria-label="Fechar pré-visualização">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></svg>
+      <span>Fechar Pré-visualização</span>
+    </button>
+
     <!-- Tour de Novidades / Onboarding Modal -->
     <div id="solumar-tour-overlay" class="tour-overlay" role="dialog" aria-modal="true" aria-labelledby="tour-step-title">
       <div class="tour-modal">
@@ -2332,12 +2519,68 @@
         });
       }
 
+      // =========================================================
+      // 5. LIVE PREVIEW MODAL CONTROLLER
+      // =========================================================
+      function initPreviewModalController() {
+        const closeBtn = document.getElementById('solumar-preview-close-btn');
+
+        function openModal() {
+          document.body.classList.add('solumar-preview-modal-open');
+        }
+
+        function closeModal() {
+          document.body.classList.remove('solumar-preview-modal-open');
+        }
+
+        closeBtn?.addEventListener('click', closeModal);
+
+        // Intercept clicks on the preview toggle button (Eye button in Decap editor)
+        document.addEventListener('click', (e) => {
+          const toggleBtn = e.target.closest(
+            'button[class*="EditorToggle"], button[class*="e1nx103k8"], button[title*="pré-visualização" i], button[title*="visualização" i], button[title*="preview" i]'
+          );
+          if (toggleBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (document.body.classList.contains('solumar-preview-modal-open')) {
+              closeModal();
+            } else {
+              openModal();
+            }
+          }
+        }, true);
+
+        // Close on clicking backdrop (clicking outside preview container)
+        document.addEventListener('click', (e) => {
+          if (document.body.classList.contains('solumar-preview-modal-open')) {
+            const pane2 = document.querySelector('.Pane2');
+            if (e.target === pane2) {
+              closeModal();
+            }
+          }
+        });
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && document.body.classList.contains('solumar-preview-modal-open')) {
+            closeModal();
+          }
+        });
+
+        // Close modal on hash change
+        window.addEventListener('hashchange', () => {
+          closeModal();
+        });
+      }
+
       function bootAdminEnhancements() {
         initAuthGate();
         initAdminHamburgerMenu();
         initAdminHomeNavigation();
         initBackToTop();
         initTourSystem();
+        initPreviewModalController();
       }
 
       document.addEventListener('DOMContentLoaded', bootAdminEnhancements);
