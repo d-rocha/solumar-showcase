@@ -55,19 +55,27 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      /* Custom Brand Header bar at top of Decap CMS */
+      /* Custom Brand Header bar - 1280px max width on desktop */
       #solumar-admin-bar {
         position: sticky;
         top: 0;
         z-index: 99999;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px 24px;
+        width: 100%;
         background: var(--solumar-navy);
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         color: #ffffff;
         box-shadow: 0 4px 20px rgba(13, 18, 36, 0.25);
+        display: flex;
+        justify-content: center;
+      }
+
+      #solumar-admin-bar .admin-bar-inner {
+        width: 100%;
+        max-width: 1280px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 24px;
       }
 
       #solumar-admin-bar .brand-info {
@@ -80,21 +88,6 @@
         height: 34px;
         width: auto;
         object-fit: contain;
-      }
-
-      #solumar-admin-bar .brand-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: rgba(189, 250, 128, 0.15);
-        color: var(--solumar-lime);
-        border: 1px solid rgba(189, 250, 128, 0.3);
-        padding: 4px 10px;
-        border-radius: 9999px;
-        font-size: 11px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
       }
 
       #solumar-admin-bar .top-actions {
@@ -146,17 +139,22 @@
         box-shadow: 0 6px 16px rgba(189, 250, 128, 0.45);
       }
 
-      /* Decap CMS Main Container Adjustments */
+      /* Decap CMS Main Container & Header Overrides (Desktop Centered 1280px) */
       #nc-root {
         font-family: var(--font-sans) !important;
       }
 
-      /* Decap CMS Header Overrides */
-      header[class*="AppHeader"],
-      header.css-1r9q45k,
-      div[class*="AppHeader"] {
+      header[class*="AppHeader"] {
         background-color: var(--solumar-navy) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      }
+
+      @media (min-width: 1024px) {
+        header[class*="AppHeader"] > div {
+          max-width: 1280px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+        }
       }
 
       /* Decap CMS Primary Action Buttons (Publish, Save) */
@@ -204,6 +202,46 @@
         border-color: rgba(61, 179, 194, 0.35) !important;
       }
 
+      /* =========================================================
+         COMPACT IMAGE PREVIEWS IN EDITOR / PRODUCT CREATION
+         Prevents gigantic images in form fields
+         ========================================================= */
+      div[class*="ControlPane"] img,
+      div[class*="ImageWrapper"] img,
+      div[class*="FileWidget"] img,
+      div[class*="FileWidgetButton"] img,
+      div[class*="ObjectWidget"] img,
+      div[class*="ListControl"] img,
+      div[class*="ImageCard"] img,
+      div[class*="ImagePreview"] img {
+        max-height: 150px !important;
+        max-width: 220px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        border-radius: 12px !important;
+        border: 1.5px solid #e2e8f0 !important;
+        background-color: #f8fafc !important;
+        padding: 6px !important;
+        box-shadow: 0 4px 14px rgba(23, 29, 54, 0.06) !important;
+        display: block !important;
+        margin-top: 8px !important;
+        margin-bottom: 8px !important;
+        transition: transform 0.2s ease !important;
+      }
+
+      div[class*="ControlPane"] img:hover,
+      div[class*="ImageWrapper"] img:hover {
+        transform: scale(1.03) !important;
+      }
+
+      /* Compact Image Containers */
+      div[class*="ImageWrapper"],
+      div[class*="FileWidget"],
+      div[class*="ImageCard"] {
+        max-width: 260px !important;
+      }
+
       /* Form Inputs & Fields */
       input[class*="Field"],
       textarea[class*="Field"],
@@ -232,6 +270,61 @@
         font-weight: 600 !important;
         color: var(--solumar-navy) !important;
         font-size: 13px !important;
+      }
+
+      /* =========================================================
+         FLOATING BACK TO TOP BUTTON (VOLTAR AO TOPO)
+         ========================================================= */
+      #solumar-back-to-top {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 99998;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--solumar-navy);
+        color: #ffffff;
+        border: 1.5px solid rgba(189, 250, 128, 0.4);
+        padding: 10px 18px;
+        border-radius: 9999px;
+        font-family: var(--font-sans);
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 10px 25px -4px rgba(13, 18, 36, 0.35);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(16px);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      #solumar-back-to-top.is-visible {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      #solumar-back-to-top:hover {
+        background: var(--solumar-navy-dark);
+        border-color: var(--solumar-lime);
+        color: var(--solumar-lime);
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px -4px rgba(13, 18, 36, 0.45);
+      }
+
+      #solumar-back-to-top .top-arrow {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(189, 250, 128, 0.2);
+        color: var(--solumar-lime);
+        font-size: 13px;
+        line-height: 1;
+        font-weight: 800;
       }
 
       /* =========================================================
@@ -504,30 +597,34 @@
     </style>
   </head>
   <body>
-    <!-- Custom Brand Top Bar -->
+    <!-- Custom Brand Top Bar (1280px Centered on Desktop) -->
     <div id="solumar-admin-bar">
-      <div class="brand-info">
-        <a href="/" title="Ir para vitrine Solumar">
-          <img src="/logo.png" alt="Solumar" class="brand-logo" />
-        </a>
-        <span class="brand-badge">
-          <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--solumar-lime);"></span>
-          Vitrine CMS
-        </span>
-      </div>
+      <div class="admin-bar-inner">
+        <div class="brand-info">
+          <a href="/" title="Ir para vitrine Solumar">
+            <img src="/logo.png" alt="Solumar" class="brand-logo" />
+          </a>
+        </div>
 
-      <div class="top-actions">
-        <!-- Tour de Novidades Trigger Button -->
-        <button id="solumar-tour-btn" type="button" class="tour-trigger-btn" title="Abrir Tour de Novidades e Guia de Uso">
-          <span>✨</span>
-          <span>Guia & Novidades</span>
-        </button>
+        <div class="top-actions">
+          <!-- Tour de Novidades Trigger Button -->
+          <button id="solumar-tour-btn" type="button" class="tour-trigger-btn" title="Abrir Tour de Novidades e Guia de Uso">
+            <span>✨</span>
+            <span>Guia & Novidades</span>
+          </button>
 
-        <a href="/" target="_blank" rel="noopener noreferrer" class="view-site-btn">
-          <span>Abrir Vitrine ↗</span>
-        </a>
+          <a href="/" target="_blank" rel="noopener noreferrer" class="view-site-btn">
+            <span>Abrir Vitrine ↗</span>
+          </a>
+        </div>
       </div>
     </div>
+
+    <!-- Floating Back to Top Button (Voltar ao Topo) -->
+    <button id="solumar-back-to-top" type="button" aria-label="Voltar ao topo da página">
+      <span class="top-arrow">↑</span>
+      <span>Voltar ao topo</span>
+    </button>
 
     <!-- Tour de Novidades / Onboarding Modal -->
     <div id="solumar-tour-overlay" class="tour-overlay" role="dialog" aria-modal="true" aria-labelledby="tour-step-title">
@@ -572,9 +669,50 @@
     <!-- Decap CMS Core Script -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
 
-    <!-- Custom Previews, Tour System & Behavior -->
+    <!-- Custom Previews, Tour System & Back to Top Controller -->
     <script>
-      // 1. Tour de Novidades Data & Controller
+      // 1. Back to Top Button Controller
+      function initBackToTop() {
+        const btn = document.getElementById('solumar-back-to-top');
+        if (!btn) return;
+
+        function checkScroll() {
+          let scrolled = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+          
+          // Also check internal Decap scrollable containers
+          const editorPanes = document.querySelectorAll('[class*="ControlPane"], [class*="AppMainContainer"], main');
+          editorPanes.forEach(pane => {
+            if (pane.scrollTop && pane.scrollTop > scrolled) {
+              scrolled = pane.scrollTop;
+            }
+          });
+
+          if (scrolled > 160) {
+            btn.classList.add('is-visible');
+          } else {
+            btn.classList.remove('is-visible');
+          }
+        }
+
+        function scrollToTop() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+          document.body.scrollTo({ top: 0, behavior: 'smooth' });
+
+          const editorPanes = document.querySelectorAll('[class*="ControlPane"], [class*="AppMainContainer"], main, #nc-root');
+          editorPanes.forEach(pane => {
+            if (typeof pane.scrollTo === 'function') {
+              pane.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          });
+        }
+
+        btn.addEventListener('click', scrollToTop);
+        window.addEventListener('scroll', checkScroll, { passive: true });
+        document.addEventListener('scroll', checkScroll, { capture: true, passive: true });
+      }
+
+      // 2. Tour de Novidades Data & Controller
       const TOUR_STEPS = [
         {
           badge: "Passo 1 de 5",
@@ -636,7 +774,7 @@
           category: "Galeria de Fotos",
           icon: "📸",
           title: "Como Subir Imagens e Galerias",
-          desc: "A vitrine da Solumar suporta múltiplas imagens por produto com zoom e Lightbox fullscreen:",
+          desc: "A vitrine da Solumar suporta múltiplas imagens por produto com visualização compacta e Lightbox fullscreen:",
           items: [
             {
               num: "1",
@@ -655,8 +793,8 @@
             },
             {
               num: "4",
-              title: "Dica de Proporção",
-              text: "Fotos verticais ou quadradas em alta resolução (JPG, PNG ou WEBP) garantem a melhor experiência visual para o cliente."
+              title: "Miniaturas Otimizadas no Painel",
+              text: "As fotos carregadas aparecem em tamanho compacto e proporcional no painel para facilitar a navegação no formulário."
             }
           ],
           primaryBtn: "Próximo: Edição →"
@@ -705,8 +843,8 @@
             },
             {
               num: "3",
-              title: "Acesso Rápido a Qualquer Momento",
-              text: "Sempre que precisar relembrar estes passos, clique no botão '✨ Guia & Novidades' na barra superior do painel."
+              title: "Voltar ao Topo e Guia",
+              text: "Use o botão flutuante 'Voltar ao topo' no canto inferior direito para subir rapidamente telas longas de edição."
             }
           ],
           primaryBtn: "Concluir Guia ✓"
@@ -834,16 +972,21 @@
         } catch (e) {}
       }
 
-      document.addEventListener('DOMContentLoaded', initTourSystem);
-      if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      function bootAdminEnhancements() {
+        initBackToTop();
         initTourSystem();
       }
 
-      // 2. Load custom preview style matching Solumar DS into Decap iframe
+      document.addEventListener('DOMContentLoaded', bootAdminEnhancements);
+      if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        bootAdminEnhancements();
+      }
+
+      // 3. Load custom preview style matching Solumar DS into Decap iframe
       if (window.CMS) {
         window.CMS.registerPreviewStyle('/admin/preview.css');
 
-        // Custom Product Preview Component
+        // Custom Product Preview Component (Compact & Proportional)
         const ProductPreview = createReactClass({
           render: function() {
             const entry = this.props.entry;
@@ -897,7 +1040,7 @@
         window.CMS.registerPreviewTemplate('products', ProductPreview);
       }
 
-      // 3. Netlify Identity Redirection Handler
+      // 4. Netlify Identity Redirection Handler
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", function(user) {
           if (!user) {
