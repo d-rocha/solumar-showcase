@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: production
 
 # Enable local backend proxy for local editing (npx decap-server)
 local_backend: true
