@@ -474,13 +474,24 @@
         margin-right: auto !important;
         padding: 24px 16px !important;
         box-sizing: border-box !important;
-        display: flex !important;
-        flex-direction: row !important;
-        gap: 24px !important;
-        align-items: flex-start !important;
       }
 
-      /* Desktop Sidebar inside 1280px container */
+      /* Desktop Collection Layout: Sidebar on the left, Grid/Main on the right */
+      div[class*="CollectionContainer"],
+      div[class*="e1sogrfi3"],
+      div[class*="ContentContainer"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        gap: 24px !important;
+      }
+
+      /* Desktop Sidebar on the left (lateral) */
       aside[class*="SidebarContainer"],
       aside[class*="e1t18l343"],
       aside[class*="Sidebar"] {
@@ -496,9 +507,11 @@
         border-radius: 18px !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
       }
 
-      /* Desktop Collection Main inside 1280px container */
+      /* Desktop Collection Main / Grid on the right */
       main[class*="CollectionMain"],
       main[class*="e1sogrfi2"] {
         padding-left: 0 !important;
@@ -506,17 +519,7 @@
         margin: 0 !important;
         flex: 1 1 auto !important;
         min-width: 0 !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-      }
-
-      div[class*="CollectionContainer"],
-      div[class*="e1sogrfi3"],
-      div[class*="ContentContainer"] {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        width: calc(100% - 264px) !important;
         box-sizing: border-box !important;
         display: flex !important;
         flex-direction: column !important;
