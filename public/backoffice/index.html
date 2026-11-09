@@ -90,7 +90,8 @@
 
       #solumar-admin-bar .admin-bar-inner {
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: 1280px !important;
+        margin: 0 auto !important;
         height: 100% !important;
         display: flex !important;
         align-items: center !important;
@@ -460,31 +461,41 @@
         box-sizing: border-box !important;
       }
 
-      /* Desktop full width containers */
+      /* Desktop containers: 1280px width, centered */
       div[class*="AppMain"],
       div[class*="App-main"],
       div[class*="MainContainer"],
       div[class*="CollectionContainer"],
       div[class*="CollectionMain"],
-      div[class*="ContentContainer"] {
+      div[class*="ContentContainer"],
+      div[class*="EditorContainer"],
+      div[class*="Editor"] {
         width: 100% !important;
-        max-width: 100% !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        max-width: 1280px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
         box-sizing: border-box !important;
       }
 
-      /* Desktop Collection Top Header Container matching grid width and lateral padding */
+      header[class*="AppHeader"] > div {
+        max-width: 1280px !important;
+        width: 100% !important;
+        margin: 0 auto !important;
+        padding: 0 16px !important;
+        box-sizing: border-box !important;
+      }
+
+      /* Desktop Collection Top Header Container matching 1280px and grid padding */
       div[class*="CollectionTopContainer"],
       div[class*="CollectionTopContainer-card-card-cardTop-cardTop"],
       div[class*="CollectionTop"],
       div[class*="CollectionHeader"],
       div[class*="TopBar"] {
         width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 0 16px 0 !important;
+        max-width: 1280px !important;
+        margin: 0 auto 16px auto !important;
         padding-left: 16px !important;
         padding-right: 16px !important;
         box-sizing: border-box !important;
@@ -502,7 +513,7 @@
         margin: 0 !important;
       }
 
-      /* Desktop CardsGrid: full width with 16px lateral padding */
+      /* Desktop CardsGrid: 1280px max-width, centered with 16px lateral padding */
       ul[class*="CardsGrid"],
       ul[class*="css-1y2l20x-CardsGrid"],
       div[class*="CardsGrid"],
@@ -510,8 +521,8 @@
       div[class*="CardGrid"],
       div[class*="Grid"] {
         width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 !important;
+        max-width: 1280px !important;
+        margin: 0 auto !important;
         padding-left: 16px !important;
         padding-right: 16px !important;
         box-sizing: border-box !important;
