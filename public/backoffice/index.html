@@ -598,15 +598,10 @@
         box-sizing: border-box !important;
       }
 
+      /* Only Grid mode: hide the List/Grid view switcher (List mode removed) */
       div[class*="ViewControlsSection"],
       div[class*="evv1i7c1"] {
-        position: static !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        margin: 0 !important;
-        top: auto !important;
-        right: auto !important;
-        z-index: auto !important;
+        display: none !important;
       }
 
       /* =========================================================
@@ -2290,6 +2285,33 @@
         rocketLaunch: `<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 256 256" style="color: var(--solumar-teal)"><path d="M223.75,81.16l-48.91-48.9a16,16,0,0,0-22.63,0C127.34,57.14,109.11,85.12,100,109.28L63.51,127.53a16,16,0,0,0-8.73,11.51L48.16,187.65a16.14,16.14,0,0,0,4.42,13.62l2.13,2.14a16.08,16.08,0,0,0,13.62,4.43l48.61-6.62a16,16,0,0,0,11.51-8.73l18.25-36.5c24.16-9.11,52.14-27.34,77.05-52.21A16,16,0,0,0,223.75,81.16ZM134.49,152l-18.25,36.5-48.61,6.62-2.13-2.14,6.62-48.61,36.5-18.25A170.82,170.82,0,0,0,134.49,152Zm78-82.16c-22.75,22.74-48,39.73-70.19,49.25l-21.39-21.4c9.52-22.18,26.51-47.44,49.25-70.19a.22.22,0,0,1,.15-.05h0a.22.22,0,0,1,.15.05l42,42A.22.22,0,0,1,212.51,69.85ZM168,80a12,12,0,1,1-12-12A12,12,0,0,1,168,80ZM52.49,219.51a8,8,0,0,1-11-11l16-16a8,8,0,0,1,11,11Z"/></svg>`,
         check: `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256" style="vertical-align: -2px; margin-left: 4px"><path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z"/></svg>`
       };
+
+      // =========================================================
+      // 0. ENFORCE GRID VIEW ONLY (REMOVES LIST VIEW DESKTOP & MOBILE)
+      // =========================================================
+      try {
+        localStorage.setItem('decap-cms.entries.viewStyle', 'VIEW_STYLE_GRID');
+      } catch (e) {}
+
+      function ensureGridViewOnly() {
+        try {
+          if (localStorage.getItem('decap-cms.entries.viewStyle') !== 'VIEW_STYLE_GRID') {
+            localStorage.setItem('decap-cms.entries.viewStyle', 'VIEW_STYLE_GRID');
+          }
+        } catch (e) {}
+
+        // If table is rendered, click the grid button to switch immediately
+        if (document.querySelector('table')) {
+          const btns = document.querySelectorAll('button[class*="ViewControlsButton"]');
+          if (btns.length >= 2) {
+            btns[1].click();
+          }
+        }
+      }
+
+      window.addEventListener('hashchange', ensureGridViewOnly);
+      document.addEventListener('DOMContentLoaded', ensureGridViewOnly);
+      setInterval(ensureGridViewOnly, 300);
 
       // =========================================================
       // 1. PASSWORD AUTHENTICATION GATE CONTROLLER
