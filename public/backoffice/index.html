@@ -767,6 +767,12 @@
       /* =========================================================
          MODAL PREVIEW FOR PRODUCT CARD (OPENS ONLY ON PREVIEW BUTTON)
          ========================================================= */
+      /* Never open modal on settings collection (opens in new tab) */
+      body.route-settings .Pane2,
+      body.route-settings div[class*="Pane2"] {
+        display: none !important;
+      }
+
       div[class*="Pane2"],
       div.Pane2 {
         position: fixed !important;
@@ -2622,9 +2628,44 @@
       }
 
       // =========================================================
-      // 5. LIVE PREVIEW MODAL CONTROLLER & DEFAULT VIEW
+      // 5. LIVE PREVIEW CONTROLLER & DEFAULT VIEW
       // =========================================================
+      function isSettingsRoute() {
+        return (window.location.hash || '').includes('/collections/settings');
+      }
+
+      function updateRouteState() {
+        if (isSettingsRoute()) {
+          document.body.classList.add('route-settings');
+          const toggleBtn = document.querySelector(
+            'button[class*="EditorToggle"], button[class*="e1nx103k8"], button[title*="pré-visualização" i], button[title*="visualização" i], button[title*="preview" i]'
+          );
+          if (toggleBtn) {
+            toggleBtn.setAttribute('title', 'Abrir pré-visualização da vitrine em nova aba');
+          }
+        } else {
+          document.body.classList.remove('route-settings');
+        }
+      }
+
+      function openVitrinePreviewTab() {
+        try {
+          const draft = {};
+          const inputs = document.querySelectorAll('input[id*="field"], textarea[id*="field"], select[id*="field"]');
+          inputs.forEach(input => {
+            const match = input.id.match(/^([a-zA-Z0-9]+)-field/);
+            if (match) {
+              draft[match[1]] = input.value;
+            }
+          });
+          localStorage.setItem('solumar_preview_settings', JSON.stringify(draft));
+        } catch (e) {}
+
+        window.open('/?preview=vitrine', '_blank');
+      }
+
       function ensureDefaultFormView() {
+        updateRouteState();
         const hash = window.location.hash || '';
         if (hash.includes('/entries/') || hash.endsWith('/new')) {
           if (!document.body.classList.contains('solumar-preview-modal-open')) {
@@ -2658,8 +2699,28 @@
           closeModal();
         });
 
-        // Sync body class with existence of .Pane2 in DOM
+        // Intercept clicks on preview toggle button:
+        // If on settings route, open vitrine in new tab instead of modal!
+        document.addEventListener('click', (e) => {
+          const toggleBtn = e.target.closest(
+            'button[class*="EditorToggle"], button[class*="e1nx103k8"], button[title*="pré-visualização" i], button[title*="visualização" i], button[title*="preview" i]'
+          );
+          if (toggleBtn) {
+            if (isSettingsRoute()) {
+              e.preventDefault();
+              e.stopPropagation();
+              openVitrinePreviewTab();
+              return;
+            }
+          }
+        }, true);
+
+        // Sync body class with existence of .Pane2 in DOM (only for products)
         function checkPane2() {
+          if (isSettingsRoute()) {
+            document.body.classList.remove('solumar-preview-modal-open');
+            return;
+          }
           const pane2 = document.querySelector('.Pane2');
           if (pane2 && window.getComputedStyle(pane2).display !== 'none') {
             document.body.classList.add('solumar-preview-modal-open');
@@ -2668,7 +2729,10 @@
           }
         }
 
-        const observer = new MutationObserver(checkPane2);
+        const observer = new MutationObserver(() => {
+          updateRouteState();
+          checkPane2();
+        });
         observer.observe(document.body, { childList: true, subtree: true });
 
         // Close on clicking backdrop (clicking outside preview container)

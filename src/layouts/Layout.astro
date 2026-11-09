@@ -43,7 +43,67 @@ const { title, description, ogImage = '/images/hero-canoa.jpg' } = Astro.props;
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   </head>
   <body class="min-h-screen w-full max-w-full overflow-x-hidden bg-[#FAFAF8] text-brand-navy antialiased selection:bg-brand-lime selection:text-brand-navy">
+    <!-- Preview Banner for Vitrine Settings Preview -->
+    <div id="solumar-preview-banner" style="display: none;" class="fixed top-0 left-0 right-0 z-[10000] bg-[#171D36] text-white py-2.5 px-4 shadow-xl border-b border-white/10 font-sans">
+      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="inline-block w-2.5 h-2.5 rounded-full bg-[#BDFA80] animate-pulse"></span>
+          <span class="text-xs font-bold uppercase tracking-wider text-white">Modo de Pré-visualização da Vitrine</span>
+          <span class="hidden sm:inline text-xs text-white/60">· Exibindo página em tempo real</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button type="button" id="close-preview-tab-btn" class="bg-white/10 hover:bg-white/20 text-white text-[11px] font-bold py-1 px-3.5 rounded-full transition-colors cursor-pointer">
+            Fechar Aba
+          </button>
+          <a href="/backoffice/#/collections/settings/entries/site" class="bg-[#BDFA80] hover:bg-[#aef565] text-[#171D36] text-[11px] font-bold py-1 px-3.5 rounded-full transition-colors">
+            Voltar ao Admin
+          </a>
+        </div>
+      </div>
+    </div>
+
     <slot />
+
+    <script>
+      (function() {
+        if (typeof window === 'undefined') return;
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('preview') === 'vitrine') {
+          const banner = document.getElementById('solumar-preview-banner');
+          if (banner) {
+            banner.style.display = 'block';
+            document.body.style.paddingTop = '40px';
+          }
+          document.getElementById('close-preview-tab-btn')?.addEventListener('click', () => {
+            window.close();
+          });
+
+          // Apply any draft settings stored from admin
+          try {
+            const rawDraft = localStorage.getItem('solumar_preview_settings');
+            if (rawDraft) {
+              const draft = JSON.parse(rawDraft);
+              if (draft.announcement) {
+                const el = document.querySelector('.announcement-bar, [data-announcement]');
+                if (el) el.textContent = draft.announcement;
+              }
+              if (draft.title) {
+                const el = document.querySelector('#hero h1, .hero-title');
+                if (el) el.textContent = draft.title;
+              }
+              if (draft.subtitle) {
+                const el = document.querySelector('#hero p, .hero-subtitle');
+                if (el) el.textContent = draft.subtitle;
+              }
+              if (draft.tagline) {
+                const el = document.querySelector('.site-tagline');
+                if (el) el.textContent = draft.tagline;
+              }
+            }
+          } catch (e) {}
+        }
+      })();
+    </script>
 
     <script>
       if (window.netlifyIdentity) {
