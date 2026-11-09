@@ -3098,6 +3098,26 @@
 
           window.CMS.registerPreviewTemplate('products', ProductPreview);
 
+          const CategoryPreview = createClass({
+            render: function() {
+              const entry = this.props.entry;
+              const title = entry.getIn(['data', 'title']) || 'Nova Categoria';
+              const slug = entry.getIn(['data', 'slug']) || '';
+              const order = entry.getIn(['data', 'order']) || 1;
+
+              return h('div', { className: 'preview-container' },
+                h('div', { className: 'preview-badge-header' }, 'Pré-visualização da Categoria'),
+                h('div', { className: 'preview-card', style: { padding: '24px', textAlign: 'center' } },
+                  h('span', { className: 'preview-category' }, 'Ordem: ' + order),
+                  h('h3', { className: 'preview-title', style: { marginTop: '8px' } }, title),
+                  slug ? h('p', { className: 'preview-tagline' }, 'Slug: ' + slug) : null
+                )
+              );
+            }
+          });
+
+          window.CMS.registerPreviewTemplate('categories', CategoryPreview);
+
           const SettingsPreview = createClass({
             render: function() {
               const entry = this.props.entry;

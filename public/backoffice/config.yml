@@ -24,7 +24,14 @@ collections:
       - { label: "Nome do Produto", name: "title", widget: "string" }
       - { label: "Subtítulo / Chamada", name: "tagline", widget: "string" }
       - { label: "Preço", name: "price", widget: "string", required: false, hint: "Ex: R$ 199,90" }
-      - { label: "Categoria", name: "category", widget: "select", options: ["Bolsas", "Viseiras & Bonés"] }
+      - label: "Categoria"
+        name: "category"
+        widget: "relation"
+        collection: "categories"
+        search_fields: ["title"]
+        value_field: "title"
+        display_fields: ["title"]
+        hint: "Selecione uma categoria cadastrada. Para criar mais categorias, use o menu 'Categorias de Produtos'."
       - { label: "Selo de Destaque", name: "badge", widget: "string", required: false, hint: "Ex: Lançamento" }
       - { label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", default: 1 }
       - { label: "Destaque na Página", name: "featured", widget: "boolean", default: false }
@@ -38,6 +45,19 @@ collections:
         widget: "list"
         field: { label: "Item", name: "detail", widget: "string" }
       - { label: "Descrição Extra", name: "body", widget: "markdown", required: false }
+
+  - name: "categories"
+    label: "Categorias de Produtos"
+    label_singular: "Categoria"
+    folder: "src/content/categories"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}} (ordem: {{order}})"
+    sortable_fields: ["order", "title"]
+    fields:
+      - { label: "Nome da Categoria", name: "title", widget: "string", hint: "Ex: Bolsas, Viseiras & Bonés, Acessórios" }
+      - { label: "Identificador (Slug)", name: "slug", widget: "string", hint: "Ex: bolsas, viseiras-bones, acessorios" }
+      - { label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", default: 1 }
 
   - name: "settings"
     label: "Configurações da Vitrine"

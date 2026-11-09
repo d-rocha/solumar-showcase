@@ -58,9 +58,12 @@ const site = settingsEntry?.data ?? {
   }
 };
 
-// 2. Load Products Collection
+// 2. Load Products and Categories Collection
 const productEntries = await getCollection('products');
 const allProducts = productEntries.map((p) => p.data);
+
+const categoryEntries = await getCollection('categories');
+const categories = categoryEntries.map((c) => c.data).sort((a, b) => a.order - b.order);
 
 // Separate catalog products from custom product if needed
 const catalogProducts = allProducts.filter((p) => p.id !== 'personalizados');
@@ -98,6 +101,7 @@ const pageTitle = `${site.siteName} | ${site.tagline}`;
     <Catalog
       products={catalogProducts}
       whatsappNumber={site.whatsappNumber}
+      categories={categories}
     />
 
     <!-- Personalized Section -->

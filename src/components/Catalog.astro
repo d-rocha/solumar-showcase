@@ -12,20 +12,36 @@ interface Product {
   details: string[];
 }
 
+interface CategoryItem {
+  title: string;
+  order?: number;
+}
+
 interface Props {
   products: Product[];
   whatsappNumber: string;
+  categories?: CategoryItem[];
 }
 
-const { products, whatsappNumber } = Astro.props;
+const { products, whatsappNumber, categories = [] } = Astro.props;
 
 // Sort by order
 const sortedProducts = [...products].sort((a, b) => a.order - b.order);
 
-// Category counts
+// Dynamic categories: merge categories collection with any distinct product categories
+const uniqueProductCats = Array.from(new Set(sortedProducts.map((p) => p.category).filter(Boolean)));
+let displayCategories: string[] = [];
+
+if (categories && categories.length > 0) {
+  const sortedFromColl = [...categories].sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((c) => c.title);
+  const extras = uniqueProductCats.filter((c) => !sortedFromColl.includes(c));
+  displayCategories = [...sortedFromColl, ...extras];
+} else {
+  displayCategories = uniqueProductCats;
+}
+
+// Total count
 const countAll = sortedProducts.length;
-const countBolsas = sortedProducts.filter((p) => p.category === 'Bolsas').length;
-const countViseiras = sortedProducts.filter((p) => p.category === 'Viseiras & Bonés').length;
 ---
 
 <section id="catalogo" class="py-20 sm:py-28 bg-[#FAFAF8] scroll-mt-20 overflow-hidden">
@@ -54,22 +70,19 @@ const countViseiras = sortedProducts.filter((p) => p.category === 'Viseiras & Bo
           <span>Todos</span>
           <span class="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold">{countAll}</span>
         </button>
-        <button
-          type="button"
-          data-category="Bolsas"
-          class="cat-filter-btn flex flex-1 sm:flex-initial items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-brand-navy/70 hover:text-brand-navy hover:bg-white/60"
-        >
-          <span>Bolsas</span>
-          <span class="rounded-full bg-neutral-200 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">{countBolsas}</span>
-        </button>
-        <button
-          type="button"
-          data-category="Viseiras & Bonés"
-          class="cat-filter-btn flex flex-1 sm:flex-initial items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-brand-navy/70 hover:text-brand-navy hover:bg-white/60"
-        >
-          <span>Viseiras & Bonés</span>
-          <span class="rounded-full bg-neutral-200 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">{countViseiras}</span>
-        </button>
+        {displayCategories.map((catName) => {
+          const count = sortedProducts.filter((p) => p.category === catName).length;
+          return (
+            <button
+              type="button"
+              data-category={catName}
+              class="cat-filter-btn flex flex-1 sm:flex-initial items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-200 text-brand-navy/70 hover:text-brand-navy hover:bg-white/60"
+            >
+              <span>{catName}</span>
+              <span class="rounded-full bg-neutral-200 px-2 py-0.5 text-[11px] font-semibold text-neutral-700">{count}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
 

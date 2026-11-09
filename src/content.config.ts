@@ -8,7 +8,7 @@ const products = defineCollection({
     title: z.string(),
     tagline: z.string(),
     price: z.string().optional(),
-    category: z.enum(['Bolsas', 'Viseiras & Bonés']),
+    category: z.string(),
     badge: z.string().optional().nullable(),
     order: z.number().default(0),
     images: z.array(z.string()),
@@ -60,4 +60,13 @@ const settings = defineCollection({
   }),
 });
 
-export const collections = { products, settings };
+const categories = defineCollection({
+  loader: glob({ pattern: '**/*.{md,json}', base: './src/content/categories' }),
+  schema: z.object({
+    title: z.string(),
+    slug: z.string().optional(),
+    order: z.number().default(0),
+  }),
+});
+
+export const collections = { products, settings, categories };
