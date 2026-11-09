@@ -622,6 +622,7 @@
       }
 
       /* Main Editor Top Header Toolbar fixed right under #solumar-admin-bar (top: 58px) */
+      div[class*="ToolbarContainer"],
       div[class*="e1d2l9mo22"] {
         position: fixed !important;
         top: 58px !important;
@@ -634,24 +635,209 @@
         z-index: 99990 !important;
         background: #ffffff !important;
         border-bottom: 1px solid var(--solumar-border) !important;
-        box-shadow: 0 4px 14px rgba(23, 29, 54, 0.05) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        box-sizing: border-box !important;
-        padding: 0 16px !important;
-        overflow: hidden !important;
-      }
-
-      /* Inside Main Toolbar: Keep elements centered in 1280px max-width */
-      div[class*="e1d2l9mo22"] > div {
-        max-width: 1280px !important;
-        width: 100% !important;
-        height: 100% !important;
+        box-shadow: 0 2px 10px rgba(23, 29, 54, 0.04) !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
         box-sizing: border-box !important;
+        padding: 0 calc(max(16px, calc((100vw - 1280px) / 2 + 16px)) + 52px) 0 max(16px, calc((100vw - 1280px) / 2 + 16px)) !important;
+        overflow: visible !important;
+      }
+
+      /* Remove all ugly vertical divider lines across the editor toolbar */
+      div[class*="e1d2l9mo22"] [class*="toolbarSection"],
+      div[class*="ToolbarContainer"] [class*="toolbarSection"],
+      div[class*="e1d2l9mo22"] a,
+      div[class*="e1d2l9mo22"] div {
+        border-right: none !important;
+        border-left: none !important;
+      }
+
+      /* Style Back Link in Editor Toolbar */
+      a[class*="ToolbarSectionBackLink"],
+      a[class*="e1d2l9mo18"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        text-decoration: none !important;
+        color: var(--solumar-navy) !important;
+        border: none !important;
+        flex-shrink: 0 !important;
+      }
+
+      div[class*="BackArrow"],
+      div[class*="e1d2l9mo15"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 32px !important;
+        height: 32px !important;
+        background: #f1f5f9 !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 9999px !important;
+        color: var(--solumar-navy) !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        transition: all 0.2s ease !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+      }
+
+      a[class*="ToolbarSectionBackLink"]:hover div[class*="BackArrow"],
+      a[class*="e1d2l9mo18"]:hover div[class*="BackArrow"] {
+        background: var(--solumar-lime) !important;
+        border-color: var(--solumar-lime-hover) !important;
+        transform: translateX(-2px) !important;
+      }
+
+      div[class*="BackCollection"],
+      div[class*="e1d2l9mo14"] {
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: var(--solumar-navy) !important;
+        line-height: 1.2 !important;
+      }
+
+      div[class*="BackStatus"],
+      div[class*="e1d2l9mo12"] {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.05em !important;
+        text-transform: uppercase !important;
+        margin-top: 2px !important;
+      }
+
+      /* Toolbar Center / Main Section */
+      div[class*="ToolbarSectionMain"],
+      div[class*="e1d2l9mo21"] {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        flex: 1 1 auto !important;
+      }
+
+      div[class*="ToolbarSubSectionFirst"],
+      div[class*="ToolbarSubSection"],
+      div[class*="e1d2l9mo20"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      /* Hide broken / redundant deploy preview check button */
+      div[class*="PreviewButtonContainer"],
+      button[class*="RefreshPreviewButton"],
+      div[class*="ToolbarSubSectionLast"],
+      div[class*="e1d2l9mo19"],
+      div[class*="e1d2l9mo3"],
+      button[class*="e1d2l9mo2"] {
+        display: none !important;
+      }
+
+      /* Buttons in Editor Toolbar: Published, Save */
+      button[class*="PublishedButton"],
+      button[class*="SaveButton"],
+      button[class*="e1d2l9mo6"],
+      button[class*="e1d2l9mo8"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: var(--solumar-navy) !important;
+        color: #ffffff !important;
+        border: 1px solid var(--solumar-navy) !important;
+        padding: 7px 16px !important;
+        border-radius: 9999px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        cursor: pointer !important;
+        box-shadow: 0 2px 8px rgba(23, 29, 54, 0.15) !important;
+        transition: all 0.2s ease !important;
+        height: 36px !important;
+      }
+
+      button[class*="PublishedButton"]:hover,
+      button[class*="SaveButton"]:hover,
+      button[class*="e1d2l9mo6"]:hover,
+      button[class*="e1d2l9mo8"]:hover {
+        background: var(--solumar-lime) !important;
+        color: var(--solumar-navy) !important;
+        border-color: var(--solumar-lime) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 12px rgba(189, 250, 128, 0.4) !important;
+      }
+
+      /* Delete Button */
+      button[class*="DeleteButton"],
+      button[class*="e1d2l9mo9"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: transparent !important;
+        color: #ef4444 !important;
+        border: 1px solid rgba(239, 68, 68, 0.3) !important;
+        padding: 7px 14px !important;
+        border-radius: 9999px !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        height: 36px !important;
+      }
+
+      button[class*="DeleteButton"]:hover,
+      button[class*="e1d2l9mo9"]:hover {
+        background: rgba(239, 68, 68, 0.1) !important;
+        border-color: #ef4444 !important;
+      }
+
+      /* Hide redundant Decap meta/settings section in editor toolbar */
+      div[class*="ToolbarSectionMeta"],
+      div[class*="e1d2l9mo17"],
+      div[class*="SettingsWrapper"] {
+        display: none !important;
+      }
+
+      /* ViewControls (Preview Eye Toggle Button): Integrated cleanly into Editor Toolbar */
+      div[class*="ViewControls"],
+      div[class*="e1nx103k0"] {
+        position: fixed !important;
+        top: 70px !important;
+        right: max(16px, calc((100vw - 1280px) / 2 + 16px)) !important;
+        z-index: 99995 !important;
+        margin: 0 !important;
+      }
+
+      button[class*="EditorToggle"],
+      button[class*="em2wuvj0"],
+      button[class*="e1nx103k8"] {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 40px !important;
+        height: 40px !important;
+        background: #f1f5f9 !important;
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 9999px !important;
+        color: var(--solumar-navy) !important;
+        cursor: pointer !important;
+        box-shadow: 0 2px 6px rgba(23, 29, 54, 0.08) !important;
+        transition: all 0.2s ease !important;
+      }
+
+      button[class*="EditorToggle"]:hover,
+      button[class*="em2wuvj0"]:hover,
+      button[class*="e1nx103k8"]:hover {
+        background: var(--solumar-lime) !important;
+        border-color: var(--solumar-lime-hover) !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 4px 10px rgba(189, 250, 128, 0.35) !important;
       }
 
       /* Markdown & RichText field widget toolbars MUST remain in-flow inside their form fields */
@@ -674,45 +860,6 @@
         box-sizing: border-box !important;
         z-index: 1 !important;
         overflow: visible !important;
-      }
-
-      /* Fix Decap's RefreshPreviewButton / PreviewButtonContainer overflowing toolbar */
-      div[class*="ToolbarSubSection"],
-      div[class*="PreviewButtonContainer"],
-      button[class*="RefreshPreviewButton"] {
-        height: 36px !important;
-        max-height: 36px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 0 12px !important;
-        font-size: 11px !important;
-        border-radius: 9999px !important;
-        box-sizing: border-box !important;
-        margin: 0 !important;
-      }
-
-      /* Hide redundant Decap avatar in editor toolbar so ViewControls eye button has clean space */
-      div[class*="ToolbarSectionMeta"],
-      div[class*="SettingsWrapper"] {
-        display: none !important;
-      }
-
-      /* ViewControls (Preview Eye Toggle Button): Integrated into Editor Toolbar */
-      div[class*="ViewControls"],
-      div[class*="e1nx103k0"] {
-        position: fixed !important;
-        top: 70px !important;
-        right: calc((100vw - 1280px) / 2 + 20px) !important;
-        z-index: 99995 !important;
-        margin: 0 !important;
-      }
-
-      @media (max-width: 1320px) {
-        div[class*="ViewControls"],
-        div[class*="e1nx103k0"] {
-          right: 20px !important;
-        }
       }
 
       /* Specific Editor content pane: exclude EditorContainer so padding-top is never overwritten */
