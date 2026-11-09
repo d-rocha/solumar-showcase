@@ -592,7 +592,7 @@
       }
 
       /* =========================================================
-         EDITOR LAYOUT: 1280px CENTERED & FORM FULL WIDTH
+         EDITOR LAYOUT: 1280px CENTERED & ZERO HEADER OVERLAP
          ========================================================= */
       div[class*="EditorContainer"],
       div[class*="e1nx103k5"] {
@@ -602,7 +602,43 @@
         left: 0 !important;
         min-height: calc(100vh - 58px) !important;
         background-color: #f8fafc !important;
-        padding-top: 0 !important;
+        padding-top: 76px !important; /* Clears the 64px fixed editor toolbar below the 58px header */
+        box-sizing: border-box !important;
+        overflow-y: auto !important;
+      }
+
+      /* Editor Toolbar fixed right under #solumar-admin-bar (top: 58px) */
+      div[class*="ToolbarContainer"],
+      div[class*="e1d2l9mo22"],
+      div[class*="EditorToolbar"],
+      div[class*="e1foekf82"] {
+        position: fixed !important;
+        top: 58px !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 64px !important;
+        min-height: 64px !important;
+        z-index: 99990 !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid var(--solumar-border) !important;
+        box-shadow: 0 4px 14px rgba(23, 29, 54, 0.05) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        padding: 0 16px !important;
+      }
+
+      /* Inside Toolbar: Keep elements centered in 1280px max-width */
+      div[class*="ToolbarContainer"] > div,
+      div[class*="e1d2l9mo22"] > div,
+      div[class*="EditorToolbar"] > div {
+        max-width: 1280px !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
         box-sizing: border-box !important;
       }
 
@@ -614,7 +650,6 @@
         padding: 0 16px !important;
         box-sizing: border-box !important;
         height: auto !important;
-        min-height: calc(100vh - 120px) !important;
       }
 
       /* SplitPane in Editor: override 50/50 split so form is full 1280px centered */
@@ -645,29 +680,14 @@
         flex: 1 1 auto !important;
       }
 
-      /* Control Pane Container: Centered max-width for optimal form editing */
+      /* Control Pane Container: Centered max-width for optimal form editing with comfortable spacing */
       div[class*="ControlPaneContainer"],
       div[class*="e11hw0lx4"] {
         width: 100% !important;
         max-width: 860px !important;
         margin: 0 auto !important;
-        padding: 24px 0 80px 0 !important;
+        padding: 24px 0 100px 0 !important;
         box-sizing: border-box !important;
-      }
-
-      /* Toolbar: sticky inside 1280px width */
-      div[class*="EditorToolbar"],
-      div[class*="ToolbarContainer"] {
-        position: sticky !important;
-        top: 58px !important;
-        z-index: 100 !important;
-        width: 100% !important;
-        max-width: 1280px !important;
-        margin: 0 auto !important;
-        padding: 10px 16px !important;
-        box-sizing: border-box !important;
-        background: #ffffff !important;
-        border-bottom: 1px solid var(--solumar-border) !important;
       }
 
       /* =========================================================
@@ -1684,6 +1704,7 @@
           max-width: 100vw !important;
           overflow-x: hidden !important;
           box-sizing: border-box !important;
+          padding-top: 76px !important;
         }
 
         div[class*="EditorControlPane"],
@@ -1694,22 +1715,27 @@
           max-width: 100vw !important;
           min-width: 0 !important;
           flex: 1 1 auto !important;
-          padding: 14px !important;
+          padding: 16px 14px 100px 14px !important;
           box-sizing: border-box !important;
         }
 
         /* Editor Toolbar */
         div[class*="EditorToolbar"],
-        div[class*="ToolbarContainer"] {
-          position: sticky !important;
+        div[class*="ToolbarContainer"],
+        div[class*="e1d2l9mo22"] {
+          position: fixed !important;
           top: 58px !important;
-          z-index: 50 !important;
+          left: 0 !important;
+          right: 0 !important;
+          z-index: 99990 !important;
           width: 100% !important;
           max-width: 100vw !important;
           box-sizing: border-box !important;
           padding: 8px 12px !important;
           flex-wrap: wrap !important;
           gap: 8px !important;
+          height: auto !important;
+          min-height: 52px !important;
         }
 
         /* Inputs and Textareas */
