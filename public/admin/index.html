@@ -79,7 +79,7 @@
       #solumar-admin-bar .brand-logo {
         height: 34px;
         width: auto;
-        object-contain: contain;
+        object-fit: contain;
       }
 
       #solumar-admin-bar .brand-badge {
@@ -95,6 +95,34 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.1em;
+      }
+
+      #solumar-admin-bar .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      #solumar-admin-bar .tour-trigger-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 7px 14px;
+        border-radius: 9999px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      #solumar-admin-bar .tour-trigger-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: var(--solumar-lime);
+        color: var(--solumar-lime);
+        transform: translateY(-1px);
       }
 
       #solumar-admin-bar .view-site-btn {
@@ -205,6 +233,274 @@
         color: var(--solumar-navy) !important;
         font-size: 13px !important;
       }
+
+      /* =========================================================
+         TOUR DE NOVIDADES / ONBOARDING MODAL (SOLUMAR DS)
+         ========================================================= */
+      .tour-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 100000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(13, 18, 36, 0.75);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 16px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .tour-overlay.is-active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .tour-modal {
+        position: relative;
+        width: 100%;
+        max-width: 620px;
+        background: #ffffff;
+        border-radius: 28px;
+        border: 1px solid rgba(23, 29, 54, 0.1);
+        box-shadow: 0 25px 60px -15px rgba(13, 18, 36, 0.35);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transform: translateY(20px) scale(0.97);
+        transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .tour-overlay.is-active .tour-modal {
+        transform: translateY(0) scale(1);
+      }
+
+      /* Tour Header */
+      .tour-header {
+        background: var(--solumar-navy);
+        color: #ffffff;
+        padding: 20px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .tour-header-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .tour-step-badge {
+        background: rgba(189, 250, 128, 0.2);
+        color: var(--solumar-lime);
+        border: 1px solid rgba(189, 250, 128, 0.35);
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+      }
+
+      .tour-category-tag {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.7);
+        font-weight: 500;
+      }
+
+      .tour-close-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: #ffffff;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s ease;
+      }
+
+      .tour-close-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: scale(1.05);
+      }
+
+      /* Tour Body */
+      .tour-body {
+        padding: 32px 32px 24px 32px;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .tour-step-icon {
+        font-size: 40px;
+        line-height: 1;
+        margin-bottom: 16px;
+        display: inline-block;
+      }
+
+      .tour-step-title {
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--solumar-navy);
+        margin: 0 0 8px 0;
+        line-height: 1.2;
+      }
+
+      .tour-step-desc {
+        font-size: 15px;
+        color: #4b5563;
+        margin: 0 0 24px 0;
+        line-height: 1.5;
+      }
+
+      .tour-card-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .tour-card-item {
+        background: var(--solumar-sand);
+        border: 1px solid rgba(23, 29, 54, 0.06);
+        border-radius: 16px;
+        padding: 14px 18px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        transition: background 0.2s ease;
+      }
+
+      .tour-card-item:hover {
+        background: #f1ede4;
+      }
+
+      .tour-card-item .item-num {
+        background: var(--solumar-navy);
+        color: var(--solumar-lime);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 700;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .tour-card-item .item-content {
+        flex: 1;
+      }
+
+      .tour-card-item .item-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--solumar-navy);
+        margin-bottom: 2px;
+      }
+
+      .tour-card-item .item-text {
+        font-size: 13px;
+        color: #4b5563;
+        line-height: 1.4;
+      }
+
+      /* Tour Footer */
+      .tour-footer {
+        background: #fafaf9;
+        border-top: 1px solid var(--solumar-border);
+        padding: 18px 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .tour-dots-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .tour-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #cbd5e1;
+        cursor: pointer;
+        transition: all 0.25s ease;
+      }
+
+      .tour-dot.is-active {
+        width: 28px;
+        border-radius: 9999px;
+        background: var(--solumar-navy);
+      }
+
+      .tour-footer-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-left: auto;
+      }
+
+      .tour-nav-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 20px;
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .tour-btn-prev {
+        background: transparent;
+        color: var(--solumar-navy);
+        border: 1px solid #cbd5e1;
+      }
+
+      .tour-btn-prev:hover {
+        background: #f1f5f9;
+        border-color: #94a3b8;
+      }
+
+      .tour-btn-next {
+        background: var(--solumar-lime);
+        color: var(--solumar-navy);
+        border: none;
+        box-shadow: 0 4px 12px rgba(189, 250, 128, 0.35);
+      }
+
+      .tour-btn-next:hover {
+        background: var(--solumar-lime-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(189, 250, 128, 0.45);
+      }
+
+      .tour-dismiss-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: #64748b;
+        cursor: pointer;
+        user-select: none;
+      }
     </style>
   </head>
   <body>
@@ -220,22 +516,330 @@
         </span>
       </div>
 
-      <div style="display:flex; align-items:center; gap:16px;">
-        <span style="font-size:12px; color:rgba(255,255,255,0.7); display:none; @media(min-width:640px){display:inline;}">
-          Decap CMS · Edição de Conteúdo
-        </span>
+      <div class="top-actions">
+        <!-- Tour de Novidades Trigger Button -->
+        <button id="solumar-tour-btn" type="button" class="tour-trigger-btn" title="Abrir Tour de Novidades e Guia de Uso">
+          <span>✨</span>
+          <span>Guia & Novidades</span>
+        </button>
+
         <a href="/" target="_blank" rel="noopener noreferrer" class="view-site-btn">
           <span>Abrir Vitrine ↗</span>
         </a>
       </div>
     </div>
 
+    <!-- Tour de Novidades / Onboarding Modal -->
+    <div id="solumar-tour-overlay" class="tour-overlay" role="dialog" aria-modal="true" aria-labelledby="tour-step-title">
+      <div class="tour-modal">
+        <!-- Header -->
+        <div class="tour-header">
+          <div class="tour-header-left">
+            <span class="tour-step-badge" id="tour-step-badge">Passo 1 de 5</span>
+            <span class="tour-category-tag" id="tour-category-tag">Visão Geral</span>
+          </div>
+          <button id="tour-close-btn" class="tour-close-btn" aria-label="Fechar Guia (Esc)">✕</button>
+        </div>
+
+        <!-- Dynamic Body -->
+        <div class="tour-body" id="tour-body">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Footer -->
+        <div class="tour-footer">
+          <div class="tour-dots-wrapper" id="tour-dots">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <div class="tour-footer-actions">
+            <label class="tour-dismiss-checkbox">
+              <input type="checkbox" id="tour-dont-show-cb" />
+              <span>Não abrir ao iniciar</span>
+            </label>
+
+            <button id="tour-prev-btn" type="button" class="tour-nav-btn tour-btn-prev">
+              Anterior
+            </button>
+            <button id="tour-next-btn" type="button" class="tour-nav-btn tour-btn-next">
+              Próximo →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Decap CMS Core Script -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
 
-    <!-- Custom Previews & Behavior -->
+    <!-- Custom Previews, Tour System & Behavior -->
     <script>
-      // Load custom preview style matching Solumar DS into Decap iframe
+      // 1. Tour de Novidades Data & Controller
+      const TOUR_STEPS = [
+        {
+          badge: "Passo 1 de 5",
+          category: "Boas-vindas",
+          icon: "🌊",
+          title: "Bem-vindo ao Painel da Solumar",
+          desc: "Aqui você gerencia todo o catálogo de produtos, fotos e configurações da sua vitrine digital com facilidade, sem depender de código.",
+          items: [
+            {
+              num: "1",
+              title: "Gerenciamento Visual Rápido",
+              text: "Cadastre novas bolsas, viseiras e bonés e veja as mudanças refletidas diretamente no site oficial."
+            },
+            {
+              num: "2",
+              title: "Pré-visualização ao Vivo",
+              text: "Conforme você digita no formulário, a tela direita exibe o card real do produto nas cores da marca."
+            },
+            {
+              num: "3",
+              title: "Tudo Integrado ao WhatsApp",
+              text: "Os clientes clicam no produto e já iniciam o atendimento no WhatsApp com o nome do modelo pré-preenchido."
+            }
+          ],
+          primaryBtn: "Iniciar Tour →"
+        },
+        {
+          badge: "Passo 2 de 5",
+          category: "Novo Produto",
+          icon: "🏷️",
+          title: "Como Cadastrar um Produto Novo",
+          desc: "Adicione qualquer item ao catálogo em apenas 3 passos simples:",
+          items: [
+            {
+              num: "1",
+              title: "Acesse a Coleção",
+              text: "Na barra lateral esquerda, clique em 'Produtos do Catálogo'."
+            },
+            {
+              num: "2",
+              title: "Criar Novo Registro",
+              text: "Clique no botão verde superior '+ Novo Produto'."
+            },
+            {
+              num: "3",
+              title: "Preencha as Informações",
+              text: "Digite o Identificador único (ex: bolsa-termica), o Nome do Produto, o Subtítulo curto e selecione a Categoria ('Bolsas' ou 'Viseiras & Bonés')."
+            },
+            {
+              num: "4",
+              title: "Preço e Selo de Destaque",
+              text: "Insira o Preço (ex: R$ 189,90) ou deixe em branco para sob consulta. Você também pode preencher um Selo (ex: Lançamento)."
+            }
+          ],
+          primaryBtn: "Próximo: Fotos →"
+        },
+        {
+          badge: "Passo 3 de 5",
+          category: "Galeria de Fotos",
+          icon: "📸",
+          title: "Como Subir Imagens e Galerias",
+          desc: "A vitrine da Solumar suporta múltiplas imagens por produto com zoom e Lightbox fullscreen:",
+          items: [
+            {
+              num: "1",
+              title: "Localize a 'Galeria de Imagens'",
+              text: "No formulário do produto, role até o campo em lista 'Galeria de Imagens'."
+            },
+            {
+              num: "2",
+              title: "Suba seus Arquivos",
+              text: "Clique em 'Adicionar Imagem' e selecione a foto do seu dispositivo (ou escolha da biblioteca de mídia existente)."
+            },
+            {
+              num: "3",
+              title: "Múltiplas Fotos Automáticas",
+              text: "A primeira foto vira a capa do card. Adicione fotos em outros ângulos para criar miniaturas navegáveis automaticamente no site."
+            },
+            {
+              num: "4",
+              title: "Dica de Proporção",
+              text: "Fotos verticais ou quadradas em alta resolução (JPG, PNG ou WEBP) garantem a melhor experiência visual para o cliente."
+            }
+          ],
+          primaryBtn: "Próximo: Edição →"
+        },
+        {
+          badge: "Passo 4 de 5",
+          category: "Edição e Benefícios",
+          icon: "✏️",
+          title: "Editando Produtos e Diferenciais",
+          desc: "Atualize qualquer informação a qualquer momento com total liberdade:",
+          items: [
+            {
+              num: "1",
+              title: "Editar Item Existente",
+              text: "Clique sobre qualquer produto na lista para abrir os detalhes e alterar textos, fotos ou valores."
+            },
+            {
+              num: "2",
+              title: "Diferenciais / Especificações",
+              text: "Adicione pontos fortes como 'Material impermeável', 'Secagem rápida', 'Fecho ajustável'. Cada item ganha um marcador elegante no card."
+            },
+            {
+              num: "3",
+              title: "Ordem de Exibição",
+              text: "Use o campo numérico 'Ordem de Exibição' (1, 2, 3...) para controlar a posição exata em que o produto aparece no catálogo."
+            }
+          ],
+          primaryBtn: "Próximo: Publicar →"
+        },
+        {
+          badge: "Passo 5 de 5",
+          category: "Publicação e Textos",
+          icon: "🚀",
+          title: "Como Salvar e Publicar no Ar",
+          desc: "Suas novidades vão ao ar de forma segura e rápida:",
+          items: [
+            {
+              num: "1",
+              title: "Clique em 'Publicar' ou 'Salvar'",
+              text: "No topo da tela de edição, clique no botão verde 'Publicar'. Seus dados são salvos imediatamente."
+            },
+            {
+              num: "2",
+              title: "Editar Textos Globais da Vitrine",
+              text: "Para mudar o Banner do Topo (Hero), o aviso de frete ou a seção de Personalizados para equipes, clique em 'Configurações da Vitrine' na barra lateral."
+            },
+            {
+              num: "3",
+              title: "Acesso Rápido a Qualquer Momento",
+              text: "Sempre que precisar relembrar estes passos, clique no botão '✨ Guia & Novidades' na barra superior do painel."
+            }
+          ],
+          primaryBtn: "Concluir Guia ✓"
+        }
+      ];
+
+      let currentTourStep = 0;
+
+      function renderTourStep(index) {
+        currentTourStep = Math.max(0, Math.min(index, TOUR_STEPS.length - 1));
+        const step = TOUR_STEPS[currentTourStep];
+
+        const badgeEl = document.getElementById('tour-step-badge');
+        const catEl = document.getElementById('tour-category-tag');
+        const bodyEl = document.getElementById('tour-body');
+        const dotsEl = document.getElementById('tour-dots');
+        const prevBtn = document.getElementById('tour-prev-btn');
+        const nextBtn = document.getElementById('tour-next-btn');
+
+        if (badgeEl) badgeEl.textContent = step.badge;
+        if (catEl) catEl.textContent = step.category;
+
+        if (bodyEl) {
+          bodyEl.innerHTML = `
+            <div class="tour-step-icon">${step.icon}</div>
+            <h2 class="tour-step-title" id="tour-step-title">${step.title}</h2>
+            <p class="tour-step-desc">${step.desc}</p>
+            <div class="tour-card-list">
+              ${step.items.map(it => `
+                <div class="tour-card-item">
+                  <div class="item-num">${it.num}</div>
+                  <div class="item-content">
+                    <div class="item-title">${it.title}</div>
+                    <div class="item-text">${it.text}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+
+        // Render progress dots
+        if (dotsEl) {
+          dotsEl.innerHTML = '';
+          TOUR_STEPS.forEach((_, idx) => {
+            const dot = document.createElement('div');
+            dot.className = `tour-dot ${idx === currentTourStep ? 'is-active' : ''}`;
+            dot.setAttribute('title', `Ir para ${TOUR_STEPS[idx].title}`);
+            dot.addEventListener('click', () => renderTourStep(idx));
+            dotsEl.appendChild(dot);
+          });
+        }
+
+        // Prev / Next button states
+        if (prevBtn) {
+          prevBtn.style.display = currentTourStep === 0 ? 'none' : 'inline-flex';
+        }
+        if (nextBtn) {
+          nextBtn.textContent = step.primaryBtn;
+        }
+      }
+
+      function openTour() {
+        const overlay = document.getElementById('solumar-tour-overlay');
+        renderTourStep(0);
+        overlay?.classList.add('is-active');
+      }
+
+      function closeTour() {
+        const overlay = document.getElementById('solumar-tour-overlay');
+        overlay?.classList.remove('is-active');
+
+        // Check if user chose "Não abrir ao iniciar"
+        const cb = document.getElementById('tour-dont-show-cb');
+        if (cb && cb.checked) {
+          try {
+            localStorage.setItem('solumar_tour_seen', 'true');
+          } catch (e) {}
+        }
+      }
+
+      function initTourSystem() {
+        const openBtn = document.getElementById('solumar-tour-btn');
+        const closeBtn = document.getElementById('tour-close-btn');
+        const prevBtn = document.getElementById('tour-prev-btn');
+        const nextBtn = document.getElementById('tour-next-btn');
+        const overlay = document.getElementById('solumar-tour-overlay');
+
+        openBtn?.addEventListener('click', openTour);
+        closeBtn?.addEventListener('click', closeTour);
+
+        overlay?.addEventListener('click', (e) => {
+          if (e.target === overlay) closeTour();
+        });
+
+        prevBtn?.addEventListener('click', () => {
+          if (currentTourStep > 0) renderTourStep(currentTourStep - 1);
+        });
+
+        nextBtn?.addEventListener('click', () => {
+          if (currentTourStep < TOUR_STEPS.length - 1) {
+            renderTourStep(currentTourStep + 1);
+          } else {
+            closeTour();
+          }
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (!overlay?.classList.contains('is-active')) return;
+          if (e.key === 'Escape') closeTour();
+          if (e.key === 'ArrowRight' && currentTourStep < TOUR_STEPS.length - 1) {
+            renderTourStep(currentTourStep + 1);
+          }
+          if (e.key === 'ArrowLeft' && currentTourStep > 0) {
+            renderTourStep(currentTourStep - 1);
+          }
+        });
+
+        // Auto-open on first time visit
+        try {
+          const seen = localStorage.getItem('solumar_tour_seen');
+          if (!seen) {
+            setTimeout(openTour, 1000);
+          }
+        } catch (e) {}
+      }
+
+      document.addEventListener('DOMContentLoaded', initTourSystem);
+      if (document.readyState === 'interactive' || document.readyState === 'complete') {
+        initTourSystem();
+      }
+
+      // 2. Load custom preview style matching Solumar DS into Decap iframe
       if (window.CMS) {
         window.CMS.registerPreviewStyle('/admin/preview.css');
 
@@ -293,7 +897,7 @@
         window.CMS.registerPreviewTemplate('products', ProductPreview);
       }
 
-      // Netlify Identity Redirection Handler
+      // 3. Netlify Identity Redirection Handler
       if (window.netlifyIdentity) {
         window.netlifyIdentity.on("init", function(user) {
           if (!user) {
