@@ -863,6 +863,90 @@
         overflow: visible !important;
       }
 
+      /* =========================================================
+         DECAP LIST WIDGET CONTROLS: MOVE "X" TO FAR RIGHT & PREVENT OVERLAP
+         ========================================================= */
+      div[class*="StyledListItemTopBar"],
+      div[class*="TopBar-StyledListItemTopBar"],
+      div[class*="e11ki7in3"] {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        box-sizing: border-box !important;
+        padding: 0 10px !important;
+        position: relative !important;
+      }
+
+      /* First button: Chevron (Expand / Collapse) stays on left */
+      div[class*="StyledListItemTopBar"] > button:first-child,
+      div[class*="TopBar-StyledListItemTopBar"] > button:first-child,
+      div[class*="e11ki7in3"] > button:first-child {
+        order: 1 !important;
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+        color: #64748b !important;
+        cursor: pointer !important;
+        transition: color 0.15s ease !important;
+      }
+
+      div[class*="StyledListItemTopBar"] > button:first-child:hover,
+      div[class*="TopBar-StyledListItemTopBar"] > button:first-child:hover,
+      div[class*="e11ki7in3"] > button:first-child:hover {
+        color: var(--solumar-navy) !important;
+      }
+
+      /* Middle: Drag Handle stays in between */
+      div[class*="StyledListItemTopBar"] > div,
+      div[class*="TopBar-StyledListItemTopBar"] > div,
+      div[class*="e11ki7in3"] > div {
+        order: 2 !important;
+        margin: 0 8px !important;
+        flex-shrink: 0 !important;
+      }
+
+      /* Last button: "X" (Delete/Remove List Item) - Moved to far right */
+      div[class*="StyledListItemTopBar"] > button:last-child,
+      div[class*="TopBar-StyledListItemTopBar"] > button:last-child,
+      div[class*="e11ki7in3"] > button:last-child,
+      button[class*="TopBarButton"]:last-child {
+        order: 99 !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 28px !important;
+        height: 28px !important;
+        border-radius: 6px !important;
+        color: #94a3b8 !important;
+        cursor: pointer !important;
+        flex-shrink: 0 !important;
+        transition: all 0.15s ease !important;
+      }
+
+      div[class*="StyledListItemTopBar"] > button:last-child:hover,
+      div[class*="TopBar-StyledListItemTopBar"] > button:last-child:hover,
+      div[class*="e11ki7in3"] > button:last-child:hover,
+      button[class*="TopBarButton"]:last-child:hover {
+        background: #fee2e2 !important;
+        color: #ef4444 !important;
+      }
+
+      /* Nested Object Label ("Imagem", etc) flows cleanly below topbar with zero overlap */
+      div[class*="NestedObjectLabel"],
+      div[class*="e11zrb3c0"] {
+        display: block !important;
+        width: 100% !important;
+        padding: 8px 12px !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        clear: both !important;
+      }
+
       /* Specific Editor content pane: exclude EditorContainer so padding-top is never overwritten */
       div[class*="Editor"]:not([class*="EditorContainer"]),
       div[class*="e1nx103k4"] {
