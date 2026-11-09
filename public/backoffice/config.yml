@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: nxt-door/solumar-showcase
   branch: production
+  auth_endpoint: api/auth
 
 # Enable local backend proxy for local editing (npx decap-server)
 local_backend: true
