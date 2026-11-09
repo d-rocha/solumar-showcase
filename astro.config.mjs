@@ -8,11 +8,20 @@ export default defineConfig({
     plugins: [
       tailwindcss(),
       {
-        name: 'decap-admin-dev-rewrite',
+        name: 'decap-backoffice-dev-rewrite',
         configureServer(server) {
           server.middlewares.use((req, res, next) => {
-            if (req.url === '/admin' || req.url === '/admin/') {
-              req.url = '/admin/index.html';
+            const url = req.url || '';
+            if (url === '/backoffice' || url === '/backoffice/') {
+              req.url = '/backoffice/index.html';
+            } else if (url === '/admin' || url === '/admin/') {
+              res.writeHead(301, { Location: '/backoffice/' });
+              res.end();
+              return;
+            } else if (url.startsWith('/admin/')) {
+              res.writeHead(301, { Location: url.replace('/admin/', '/backoffice/') });
+              res.end();
+              return;
             }
             next();
           });

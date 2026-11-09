@@ -4,19 +4,30 @@ interface Props {
   whatsappUrl: string;
   instagramUrl: string;
   instagramHandle: string;
+  announcement?: string;
+  location?: string;
 }
 
-const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
+const { phone, whatsappUrl, instagramUrl, instagramHandle, announcement, location } = Astro.props;
 ---
 
-<header class="sticky top-0 z-40 w-full border-b border-neutral-100 bg-white/95 backdrop-blur-md transition-all">
-  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+<header class="fixed top-0 left-0 right-0 z-40 w-full border-b border-neutral-100 bg-white/95 backdrop-blur-md transition-all shadow-xs">
+  {announcement && (
+    <div class="bg-brand-navy py-2 text-center text-xs font-semibold uppercase tracking-wider text-brand-sand">
+      <div class="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-lime animate-pulse"></span>
+        <span>{announcement} {location ? `· Entregamos para todo o Brasil direto de ${location}` : ''}</span>
+      </div>
+    </div>
+  )}
+
+  <div class="mx-auto flex h-16 sm:h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
     <!-- Brand Logo -->
     <a href="#" class="group flex items-center gap-3 transition-transform hover:scale-[1.02]">
       <img
         src="/logo.png"
         alt="Solumar sports & lifestyle"
-        class="h-12 w-auto object-contain sm:h-14"
+        class="h-10 w-auto object-contain sm:h-14"
         loading="eager"
       />
       <div class="hidden flex-col sm:flex">
@@ -54,13 +65,6 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
       >
         {instagramHandle}
       </a>
-      <a
-        href="/admin/"
-        class="text-xs font-semibold text-neutral-400 transition-colors hover:text-brand-navy"
-        title="Painel Decap CMS"
-      >
-        Admin
-      </a>
     </nav>
 
     <!-- Desktop WhatsApp CTA Button -->
@@ -78,40 +82,52 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
       </a>
     </div>
 
-    <!-- Mobile Menu Button -->
-    <button
-      id="mobile-menu-btn"
-      type="button"
-      aria-label="Abrir menu de navegação"
-      aria-expanded="false"
-      class="flex h-11 w-11 items-center justify-center rounded-xl border border-neutral-200 text-brand-navy transition-colors hover:bg-neutral-50 md:hidden"
-    >
-      <svg id="menu-icon-bars" class="h-6 w-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-      <svg id="menu-icon-close" class="hidden h-6 w-6 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
+    <!-- Mobile Header Actions (Compact WhatsApp + Menu Burger) -->
+    <div class="flex items-center gap-2 md:hidden">
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center gap-1.5 rounded-full bg-brand-lime px-3 py-1.5 text-xs font-bold text-brand-navy shadow-xs transition-all active:scale-95"
+        aria-label="Falar no WhatsApp"
+      >
+        <svg class="h-3.5 w-3.5 shrink-0 fill-current" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.45.06-.68.32-.23.25-.89.87-.89 2.12s.91 2.46 1.04 2.63c.13.17 1.79 2.74 4.34 3.84.61.26 1.08.42 1.45.54.61.19 1.17.17 1.61.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.12-.22-.19-.47-.32"/>
+        </svg>
+        <span>WhatsApp</span>
+      </a>
+
+      <button
+        id="mobile-menu-btn"
+        type="button"
+        aria-label="Abrir menu de navegação"
+        aria-expanded="false"
+        class="flex h-10 w-10 items-center justify-center rounded-xl border border-neutral-200 bg-white text-brand-navy shadow-xs transition-colors hover:bg-neutral-50 active:scale-95"
+      >
+        <svg class="h-5 w-5 stroke-current" fill="none" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
   </div>
 
   <!-- Mobile Slide-over Drawer -->
-  <div
-    id="mobile-drawer"
-    class="pointer-events-none fixed inset-0 z-50 flex transition-opacity duration-300 opacity-0 overflow-hidden invisible"
-  >
+  <div id="mobile-drawer" class="fixed inset-0 z-50">
     <!-- Backdrop -->
     <div id="mobile-backdrop" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm"></div>
 
     <!-- Drawer Panel -->
-    <div class="relative ml-auto flex h-full w-full max-w-xs flex-col bg-white p-6 shadow-2xl transition-transform duration-300 translate-x-full">
+    <div
+      id="mobile-drawer-panel"
+      class="relative ml-auto flex h-full w-full max-w-xs flex-col bg-white p-6 shadow-2xl"
+    >
       <div class="flex items-center justify-between pb-6 border-b border-neutral-100">
-        <img src="/logo.png" alt="Solumar" class="h-10 w-auto" />
+        <img src="/logo.png" alt="Solumar" class="h-10 w-auto object-contain" />
         <button
           id="mobile-close-btn"
           type="button"
           aria-label="Fechar menu"
-          class="flex h-10 w-10 items-center justify-center rounded-lg text-neutral-500 hover:bg-neutral-100"
+          class="flex h-10 w-10 items-center justify-center rounded-lg text-neutral-500 hover:bg-neutral-100 transition-colors"
         >
           <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -119,26 +135,26 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
         </button>
       </div>
 
-      <nav class="mt-6 flex flex-col gap-4 text-base font-medium">
-        <a href="#catalogo" class="mobile-nav-link rounded-xl p-3 text-brand-navy hover:bg-neutral-50">
+      <nav class="mt-6 flex flex-col gap-2 text-base font-medium">
+        <a href="#catalogo" class="mobile-nav-link rounded-xl p-3 text-brand-navy hover:bg-neutral-50 transition-colors">
           Catálogo Completo
         </a>
-        <a href="#personalizados" class="mobile-nav-link rounded-xl p-3 text-brand-navy hover:bg-neutral-50">
+        <a href="#personalizados" class="mobile-nav-link rounded-xl p-3 text-brand-navy hover:bg-neutral-50 transition-colors">
           Viseiras e Bonés Personalizados
         </a>
-        <a href="#contato" class="mobile-nav-link rounded-xl p-3 text-brand-navy hover:bg-neutral-50">
+        <a href="#contato" class="mobile-nav-link rounded-xl p-3 text-brand-navy hover:bg-neutral-50 transition-colors">
           Como Comprar / Contato
         </a>
         <a
           href={instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="mobile-nav-link flex items-center gap-2 rounded-xl p-3 text-brand-navy hover:bg-neutral-50"
+          class="mobile-nav-link flex items-center justify-between rounded-xl p-3 text-brand-navy hover:bg-neutral-50 transition-colors"
         >
           <span>Instagram ({instagramHandle})</span>
-        </a>
-        <a href="/admin/" class="mobile-nav-link rounded-xl p-3 text-xs font-semibold text-neutral-400 hover:text-brand-navy">
-          Painel Decap CMS
+          <svg class="h-4 w-4 text-neutral-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
         </a>
       </nav>
 
@@ -162,6 +178,28 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
   </div>
 </header>
 
+<style>
+  #mobile-drawer {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  #mobile-drawer.is-active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #mobile-drawer-panel {
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+  }
+  #mobile-drawer.is-active #mobile-drawer-panel {
+    transform: translateX(0);
+  }
+</style>
+
 <script>
   function setupMobileMenu() {
     const btn = document.getElementById('mobile-menu-btn');
@@ -173,19 +211,13 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
     if (!btn || !drawer) return;
 
     function openMenu() {
-      drawer?.classList.remove('pointer-events-none', 'opacity-0', 'invisible');
-      drawer?.classList.add('opacity-100');
-      drawer?.querySelector('div.relative')?.classList.remove('translate-x-full');
-      drawer?.querySelector('div.relative')?.classList.add('translate-x-0');
+      drawer?.classList.add('is-active');
       document.body.style.overflow = 'hidden';
       btn?.setAttribute('aria-expanded', 'true');
     }
 
     function closeMenu() {
-      drawer?.classList.add('pointer-events-none', 'opacity-0', 'invisible');
-      drawer?.classList.remove('opacity-100');
-      drawer?.querySelector('div.relative')?.classList.add('translate-x-full');
-      drawer?.querySelector('div.relative')?.classList.remove('translate-x-0');
+      drawer?.classList.remove('is-active');
       document.body.style.overflow = '';
       btn?.setAttribute('aria-expanded', 'false');
     }

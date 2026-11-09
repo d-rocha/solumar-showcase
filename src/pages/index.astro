@@ -73,23 +73,17 @@ const pageTitle = `${site.siteName} | ${site.tagline}`;
 ---
 
 <Layout title={pageTitle} description={site.description}>
-  <!-- Top Announcement Bar -->
-  <div class="bg-brand-navy border-b border-white/10 py-2 text-center text-xs font-semibold tracking-wider text-brand-sand/90">
-    <div class="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4">
-      <span class="inline-block h-2 w-2 rounded-full bg-brand-lime animate-pulse"></span>
-      <span>{site.announcement} · Entregamos para todo o Brasil direto de {site.location}</span>
-    </div>
-  </div>
-
-  <!-- Header -->
+  <!-- Fixed Header (with Announcement Bar) -->
   <Header
     phone={site.phone}
     whatsappUrl={mainWhatsappUrl}
     instagramUrl={site.instagramUrl}
     instagramHandle={site.instagramHandle}
+    announcement={site.announcement}
+    location={site.location}
   />
 
-  <main>
+  <main class="pt-[96px] sm:pt-[116px]">
     <!-- Hero Section -->
     <Hero
       badge={site.hero.badge}

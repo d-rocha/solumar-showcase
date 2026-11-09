@@ -50,7 +50,7 @@ const { title, description, ogImage = '/images/hero-canoa.jpg' } = Astro.props;
         window.netlifyIdentity.on("init", (user: any) => {
           if (!user) {
             window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+              document.location.href = "/backoffice/";
             });
           }
         });
