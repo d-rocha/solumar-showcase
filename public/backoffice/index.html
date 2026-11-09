@@ -477,7 +477,7 @@
       }
 
       /* In Editor view: AppMainContainer must not add top padding over the fixed toolbar */
-      div[class*="AppMainContainer"]:has(div[class*="ToolbarContainer"]),
+      div[class*="AppMainContainer"]:has(div[class*="e1d2l9mo22"]),
       div[class*="AppMainContainer"]:has(div[class*="EditorContainer"]) {
         padding-top: 0 !important;
       }
@@ -621,11 +621,8 @@
         overflow-y: auto !important;
       }
 
-      /* Editor Toolbar fixed right under #solumar-admin-bar (top: 58px) */
-      div[class*="ToolbarContainer"],
-      div[class*="e1d2l9mo22"],
-      div[class*="EditorToolbar"],
-      div[class*="e1foekf82"] {
+      /* Main Editor Top Header Toolbar fixed right under #solumar-admin-bar (top: 58px) */
+      div[class*="e1d2l9mo22"] {
         position: fixed !important;
         top: 58px !important;
         left: 0 !important;
@@ -646,10 +643,8 @@
         overflow: hidden !important;
       }
 
-      /* Inside Toolbar: Keep elements centered in 1280px max-width */
-      div[class*="ToolbarContainer"] > div,
-      div[class*="e1d2l9mo22"] > div,
-      div[class*="EditorToolbar"] > div {
+      /* Inside Main Toolbar: Keep elements centered in 1280px max-width */
+      div[class*="e1d2l9mo22"] > div {
         max-width: 1280px !important;
         width: 100% !important;
         height: 100% !important;
@@ -657,6 +652,28 @@
         align-items: center !important;
         justify-content: space-between !important;
         box-sizing: border-box !important;
+      }
+
+      /* Markdown & RichText field widget toolbars MUST remain in-flow inside their form fields */
+      div[class*="e11cox783"],
+      div[class*="e1foekf82"] {
+        position: static !important;
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        background: #f8fafc !important;
+        border: 1px solid #e2e8f0 !important;
+        border-bottom: none !important;
+        border-radius: 12px 12px 0 0 !important;
+        box-shadow: none !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        padding: 8px 12px !important;
+        box-sizing: border-box !important;
+        z-index: 1 !important;
+        overflow: visible !important;
       }
 
       /* Fix Decap's RefreshPreviewButton / PreviewButtonContainer overflowing toolbar */
@@ -1780,9 +1797,7 @@
           box-sizing: border-box !important;
         }
 
-        /* Editor Toolbar */
-        div[class*="EditorToolbar"],
-        div[class*="ToolbarContainer"],
+        /* Main Editor Header Toolbar */
         div[class*="e1d2l9mo22"] {
           position: fixed !important;
           top: 58px !important;
