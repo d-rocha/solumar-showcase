@@ -7,6 +7,7 @@ category: "Bolsas"
 badge: null
 order: 2
 featured: true
+image: "/images/bolsa-1.png"
 images:
   - "/images/bolsa-1.png"
 details:

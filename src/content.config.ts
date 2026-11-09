@@ -11,6 +11,7 @@ const products = defineCollection({
     category: z.string(),
     badge: z.string().optional().nullable(),
     order: z.number().default(0),
+    image: z.string().optional(),
     images: z.array(z.string()),
     details: z.array(z.string()),
     featured: z.boolean().default(false),

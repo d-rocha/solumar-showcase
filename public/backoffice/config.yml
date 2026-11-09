@@ -38,6 +38,7 @@ collections:
       - { label: "Selo de Destaque", name: "badge", widget: "string", required: false, hint: "Ex: Lançamento" }
       - { label: "Ordem de Exibição", name: "order", widget: "number", value_type: "int", default: 1 }
       - { label: "Destaque na Página", name: "featured", widget: "boolean", default: false }
+      - { label: "Imagem de Capa (Card)", name: "image", widget: "image", required: false, hint: "Foto principal exibida no card do catálogo" }
       - label: "Galeria de Imagens"
         name: "images"
         widget: "list"

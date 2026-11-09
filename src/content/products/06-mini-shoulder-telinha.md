@@ -7,6 +7,7 @@ category: "Bolsas"
 badge: null
 order: 6
 featured: false
+image: "/images/telinha-1.png"
 images:
   - "/images/telinha-1.png"
 details:

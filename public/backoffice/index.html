@@ -1099,36 +1099,132 @@
         transform: scale(1.04);
       }
 
-      /* Decap CMS Cards & List Items */
+      /* =========================================================
+         DECAP CMS PRODUCT & COLLECTION CARDS (GORGEOUS E-COMMERCE GRID)
+         ========================================================= */
       li[class*="GridCard"],
       li[class*="GridCard-card-card"],
       li[class*="effeus48"],
-      div[class*="GridCard"],
-      a[class*="Card"],
-      div[class*="Card"] {
-        border-radius: 18px !important;
+      div[class*="GridCard"] {
+        border-radius: 20px !important;
         border: 1px solid rgba(23, 29, 54, 0.08) !important;
-        box-shadow: 0 6px 20px rgba(23, 29, 54, 0.04) !important;
-        transition: all 0.25s ease !important;
+        box-shadow: 0 4px 16px rgba(23, 29, 54, 0.05) !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease !important;
         overflow: hidden !important;
         box-sizing: border-box !important;
         background: #ffffff !important;
+        display: flex !important;
+        flex-direction: column !important;
+        min-height: 270px !important;
+      }
+
+      li[class*="GridCard"]:hover,
+      div[class*="GridCard"]:hover {
+        transform: translateY(-4px) !important;
+        box-shadow: 0 14px 30px rgba(23, 29, 54, 0.12) !important;
+        border-color: rgba(61, 179, 194, 0.4) !important;
       }
 
       a[class*="GridCardLink"],
       a[class*="effeus47"] {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column !important;
         width: 100% !important;
+        height: 100% !important;
+        min-height: 270px !important;
         text-decoration: none !important;
         box-sizing: border-box !important;
+        color: inherit !important;
       }
 
-      a[class*="Card"]:hover,
-      li[class*="GridCard"]:hover,
-      div[class*="GridCard"]:hover {
-        transform: translateY(-3px) !important;
-        box-shadow: 0 12px 28px rgba(23, 29, 54, 0.08) !important;
-        border-color: rgba(61, 179, 194, 0.35) !important;
+      /* Card Image container & image */
+      div[class*="ImageCard"],
+      div[class*="CardImage"],
+      .solumar-card-thumb-wrap {
+        width: 100% !important;
+        height: 170px !important;
+        min-height: 170px !important;
+        max-height: 170px !important;
+        overflow: hidden !important;
+        background-color: #f1f5f9 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        position: relative !important;
+        border-bottom: 1px solid rgba(23, 29, 54, 0.06) !important;
+      }
+
+      div[class*="ImageCard"] img,
+      div[class*="CardImage"] img,
+      .solumar-card-thumb-wrap img,
+      li[class*="GridCard"] .solumar-card-thumb-wrap img {
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 100% !important;
+        min-height: 100% !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: cover !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        box-shadow: none !important;
+        transition: transform 0.3s ease !important;
+      }
+
+      li[class*="GridCard"]:hover div[class*="ImageCard"] img,
+      li[class*="GridCard"]:hover .solumar-card-thumb-wrap img {
+        transform: scale(1.05) !important;
+      }
+
+      /* Card Content / Card Body */
+      div[class*="CardBody"],
+      .solumar-card-content,
+      a[class*="GridCardLink"] > div:not([class*="ImageCard"]):not(.solumar-card-thumb-wrap) {
+        padding: 14px 16px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        justify-content: space-between !important;
+        background: #ffffff !important;
+        font-family: var(--font-sans) !important;
+      }
+
+      .solumar-card-tags {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 8px !important;
+        margin-bottom: 8px !important;
+      }
+
+      .solumar-card-cat-badge {
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        background: rgba(61, 179, 194, 0.12) !important;
+        color: #0d8393 !important;
+        padding: 3px 8px !important;
+        border-radius: 6px !important;
+      }
+
+      .solumar-card-price-badge {
+        font-size: 13px !important;
+        font-weight: 800 !important;
+        color: #0f172a !important;
+        background: #f1f5f9 !important;
+        padding: 2px 8px !important;
+        border-radius: 6px !important;
+      }
+
+      .solumar-card-title {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: var(--solumar-navy) !important;
+        line-height: 1.35 !important;
+        margin: 0 !important;
       }
 
       @media (min-width: 901px) {
@@ -1174,7 +1270,7 @@
       div[class*="FileWidgetButton"] img,
       div[class*="ObjectWidget"] img,
       div[class*="ListControl"] img,
-      div[class*="ImageCard"] img,
+      div[class*="ControlPane"] div[class*="ImageCard"] img,
       div[class*="ImagePreview"] img,
       div[class*="Field"] img {
         width: 96px !important;
@@ -2418,18 +2514,14 @@
       } catch (e) {}
 
       function ensureGridViewOnly() {
-        try {
-          if (localStorage.getItem('decap-cms.entries.viewStyle') !== 'VIEW_STYLE_GRID') {
-            localStorage.setItem('decap-cms.entries.viewStyle', 'VIEW_STYLE_GRID');
-          }
-        } catch (e) {}
+        const hash = window.location.hash || '';
+        if (hash.includes('/entries/')) return;
 
-        // If table is rendered, click the grid button to switch immediately
-        if (document.querySelector('table')) {
-          const btns = document.querySelectorAll('button[class*="ViewControlsButton"]');
-          if (btns.length >= 2) {
-            btns[1].click();
-          }
+        // Decap CMS uses aria-label="Grid view option" to switch between list and grid
+        const gridBtn = document.querySelector('button[aria-label="Grid view option"]');
+        const isListCard = document.querySelector('li[class*="ListCard"], a[class*="ListCardLink"]');
+        if (gridBtn && isListCard) {
+          gridBtn.click();
         }
       }
 
@@ -3120,6 +3212,91 @@
         ensureDefaultFormView();
       }
 
+      // =========================================================
+      // PRODUCT CARDS ENHANCER (IMAGE THUMBNAILS & GORGEOUS CARDS)
+      // =========================================================
+      const PRODUCT_THUMBS = {
+        'mala esportiva': '/images/mala-1.jpg',
+        'bolsa de praia': '/images/praia-branca.jpg',
+        'bolsa': '/images/bolsa-1.png',
+        'shoulder': '/images/shoulder-a.png',
+        'mini shoulder silicone': '/images/sil-lancamento.jpg',
+        'mini shoulder telinha': '/images/telinha-1.png',
+        'boné respirável': '/images/bone-respiravel-1.jpg',
+        'bone respiravel': '/images/bone-respiravel-1.jpg',
+        'bonés solumar bordados': '/images/bone-solumar-remocanoa.jpg',
+        'bones solumar bordados': '/images/bone-solumar-remocanoa.jpg',
+        'viseira laranja': '/images/vis-laranja-1.jpg',
+        'viseira beach tennis': '/images/vis-beach-tennis.jpg',
+        'viseira corrida de rua': '/images/vis-corrida-1.jpg',
+        'viseira canoa rosa': '/images/vis-canoa-rosa-1.jpg',
+        'viseiras & bonés personalizados': '/images/pers-viseira.jpg',
+        'viseiras & bones personalizados': '/images/pers-viseira.jpg'
+      };
+
+      function enhanceProductCards() {
+        const hash = window.location.hash || '';
+        // Only run when viewing collections entries list (not in entry editor)
+        if (hash.includes('/entries/')) return;
+
+        const cards = document.querySelectorAll(
+          'li[class*="GridCard"], li[class*="effeus48"], div[class*="GridCard"], a[class*="GridCardLink"]'
+        );
+        if (!cards.length) return;
+
+        cards.forEach(card => {
+          if (card.getAttribute('data-solumar-enhanced') === 'true') return;
+
+          const link = card.tagName === 'A' ? card : card.querySelector('a');
+          if (!link) return;
+
+          const rawText = link.innerText.trim();
+          if (!rawText) return;
+
+          // Parse summary format: "Title (Category) - Price"
+          // Ex: "Bolsa (Bolsas) - R$ 169,90"
+          const match = rawText.match(/^(.*?)\s*(?:\((.*?)\))?\s*(?:-\s*(.*))?$/);
+          if (!match) return;
+
+          const title = (match[1] || rawText).trim();
+          const category = (match[2] || '').trim();
+          const price = (match[3] || '').trim();
+
+          const lowerTitle = title.toLowerCase();
+          const thumbSrc = PRODUCT_THUMBS[lowerTitle] || '/images/hero-canoa.jpg';
+
+          card.setAttribute('data-solumar-enhanced', 'true');
+
+          // Check if Decap CMS rendered ImageCard
+          const hasImageCard = link.querySelector('div[class*="ImageCard"]');
+          const existingImg = link.querySelector('img');
+
+          if (!hasImageCard && !existingImg) {
+            const thumbWrap = document.createElement('div');
+            thumbWrap.className = 'solumar-card-thumb-wrap';
+            thumbWrap.innerHTML = `<img src="${thumbSrc}" alt="${title}" loading="lazy" />`;
+            link.insertBefore(thumbWrap, link.firstChild);
+          }
+
+          // Format text container into rich card content
+          const textEl = link.querySelector('div:not(.solumar-card-thumb-wrap):not([class*="ImageCard"])') || link;
+          if (textEl && (category || price)) {
+            textEl.innerHTML = `
+              <div class="solumar-card-tags">
+                ${category ? `<span class="solumar-card-cat-badge">${category}</span>` : '<span></span>'}
+                ${price ? `<span class="solumar-card-price-badge">${price}</span>` : ''}
+              </div>
+              <h3 class="solumar-card-title">${title}</h3>
+            `;
+          }
+        });
+      }
+
+      function initProductCardsEnhancer() {
+        enhanceProductCards();
+        setInterval(enhanceProductCards, 400);
+      }
+
       function bootAdminEnhancements() {
         initAuthGate();
         initAdminHamburgerMenu();
@@ -3127,6 +3304,7 @@
         initBackToTop();
         initTourSystem();
         initPreviewModalController();
+        initProductCardsEnhancer();
       }
 
       document.addEventListener('DOMContentLoaded', bootAdminEnhancements);

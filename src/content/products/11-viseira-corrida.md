@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: null
 order: 11
 featured: false
+image: "/images/vis-corrida-1.jpg"
 images:
   - "/images/vis-corrida-1.jpg"
   - "/images/vis-corrida-2.jpg"

@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: null
 order: 8
 featured: false
+image: "/images/bone-solumar-remocanoa.jpg"
 images:
   - "/images/bone-solumar-remocanoa.jpg"
   - "/images/bone-solumar-cinza.jpg"

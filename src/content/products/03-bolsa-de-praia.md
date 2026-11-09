@@ -7,6 +7,7 @@ category: "Bolsas"
 badge: null
 order: 3
 featured: true
+image: "/images/praia-branca.jpg"
 images:
   - "/images/praia-branca.jpg"
   - "/images/praia-laranja.jpg"

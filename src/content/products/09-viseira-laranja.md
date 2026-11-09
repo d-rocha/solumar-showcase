@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: null
 order: 9
 featured: false
+image: "/images/vis-laranja-1.jpg"
 images:
   - "/images/vis-laranja-1.jpg"
   - "/images/vis-laranja-2.jpg"

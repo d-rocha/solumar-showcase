@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: null
 order: 10
 featured: false
+image: "/images/vis-beach-tennis.jpg"
 images:
   - "/images/vis-beach-tennis.jpg"
   - "/images/vis-beach-tennis-2.jpg"

@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: null
 order: 12
 featured: false
+image: "/images/vis-canoa-rosa-1.jpg"
 images:
   - "/images/vis-canoa-rosa-1.jpg"
   - "/images/vis-canoa-rosa-2.jpg"

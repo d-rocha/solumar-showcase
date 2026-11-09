@@ -7,6 +7,7 @@ category: "Bolsas"
 badge: null
 order: 4
 featured: true
+image: "/images/shoulder-a.png"
 images:
   - "/images/shoulder-a.png"
   - "/images/shoulder-b.jpg"

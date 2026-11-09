@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: null
 order: 7
 featured: false
+image: "/images/bone-respiravel-1.jpg"
 images:
   - "/images/bone-respiravel-1.jpg"
   - "/images/bone-respiravel-2.jpg"

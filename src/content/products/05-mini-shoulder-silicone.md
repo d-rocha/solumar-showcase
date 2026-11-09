@@ -7,6 +7,7 @@ category: "Bolsas"
 badge: "Lançamento"
 order: 5
 featured: false
+image: "/images/sil-lancamento.jpg"
 images:
   - "/images/sil-lancamento.jpg"
   - "/images/sil-1.png"

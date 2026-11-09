@@ -7,6 +7,7 @@ category: "Viseiras & Bonés"
 badge: "Sob medida"
 order: 13
 featured: false
+image: "/images/pers-viseira.jpg"
 images:
   - "/images/pers-viseira.jpg"
   - "/images/pers-bone.jpg"

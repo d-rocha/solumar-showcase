@@ -7,6 +7,7 @@ category: "Bolsas"
 badge: null
 order: 1
 featured: true
+image: "/images/mala-1.jpg"
 images:
   - "/images/mala-1.jpg"
   - "/images/mala-2.jpg"
