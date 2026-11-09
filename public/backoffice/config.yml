@@ -41,8 +41,6 @@ collections:
 
   - name: "settings"
     label: "Configurações da Vitrine"
-    editor:
-      preview: false
     files:
       - file: "src/content/settings/site.json"
         name: "site"

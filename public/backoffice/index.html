@@ -476,6 +476,12 @@
         box-sizing: border-box !important;
       }
 
+      /* In Editor view: AppMainContainer must not add top padding over the fixed toolbar */
+      div[class*="AppMainContainer"]:has(div[class*="ToolbarContainer"]),
+      div[class*="AppMainContainer"]:has(div[class*="EditorContainer"]) {
+        padding-top: 0 !important;
+      }
+
       /* Desktop Collection Layout: Sidebar on the left, Grid/Main on the right */
       div[class*="CollectionContainer"],
       div[class*="e1sogrfi3"],
@@ -610,7 +616,7 @@
         left: 0 !important;
         min-height: calc(100vh - 58px) !important;
         background-color: #f8fafc !important;
-        padding-top: 76px !important; /* Clears the 64px fixed editor toolbar below the 58px header */
+        padding-top: 88px !important; /* Clears the 64px fixed editor toolbar below the 58px header with generous breathing room */
         box-sizing: border-box !important;
         overflow-y: auto !important;
       }
@@ -627,6 +633,7 @@
         width: 100% !important;
         height: 64px !important;
         min-height: 64px !important;
+        max-height: 64px !important;
         z-index: 99990 !important;
         background: #ffffff !important;
         border-bottom: 1px solid var(--solumar-border) !important;
@@ -636,6 +643,7 @@
         justify-content: center !important;
         box-sizing: border-box !important;
         padding: 0 16px !important;
+        overflow: hidden !important;
       }
 
       /* Inside Toolbar: Keep elements centered in 1280px max-width */
@@ -644,10 +652,33 @@
       div[class*="EditorToolbar"] > div {
         max-width: 1280px !important;
         width: 100% !important;
+        height: 100% !important;
         display: flex !important;
         align-items: center !important;
         justify-content: space-between !important;
         box-sizing: border-box !important;
+      }
+
+      /* Fix Decap's RefreshPreviewButton / PreviewButtonContainer overflowing toolbar */
+      div[class*="ToolbarSubSection"],
+      div[class*="PreviewButtonContainer"],
+      button[class*="RefreshPreviewButton"] {
+        height: 36px !important;
+        max-height: 36px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 12px !important;
+        font-size: 11px !important;
+        border-radius: 9999px !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+      }
+
+      /* Hide redundant Decap avatar in editor toolbar so ViewControls eye button has clean space */
+      div[class*="ToolbarSectionMeta"],
+      div[class*="SettingsWrapper"] {
+        display: none !important;
       }
 
       /* ViewControls (Preview Eye Toggle Button): Integrated into Editor Toolbar */
@@ -667,7 +698,8 @@
         }
       }
 
-      div[class*="Editor"],
+      /* Specific Editor content pane: exclude EditorContainer so padding-top is never overwritten */
+      div[class*="Editor"]:not([class*="EditorContainer"]),
       div[class*="e1nx103k4"] {
         width: 100% !important;
         max-width: 1280px !important;
@@ -2724,6 +2756,42 @@
           });
 
           window.CMS.registerPreviewTemplate('products', ProductPreview);
+
+          const SettingsPreview = createClass({
+            render: function() {
+              const entry = this.props.entry;
+              const siteName = entry.getIn(['data', 'siteName']) || 'Solumar';
+              const tagline = entry.getIn(['data', 'tagline']) || 'Catálogo Digital';
+              const announcement = entry.getIn(['data', 'announcement']) || '';
+              const phone = entry.getIn(['data', 'phone']) || '';
+              const location = entry.getIn(['data', 'location']) || '';
+              const heroTitle = entry.getIn(['data', 'hero', 'title']) || '';
+              const heroSubtitle = entry.getIn(['data', 'hero', 'subtitle']) || '';
+              const rawHeroImg = entry.getIn(['data', 'hero', 'image']);
+              const heroImage = rawHeroImg ? this.props.getAsset(rawHeroImg) : '';
+
+              return h('div', { className: 'preview-container settings-preview-container' },
+                h('div', { className: 'preview-badge-header' },
+                  'Pré-visualização da Vitrine · Solumar'
+                ),
+                announcement ? h('div', { className: 'preview-announcement-bar' }, announcement) : null,
+                h('div', { className: 'preview-card' },
+                  heroImage ? h('div', { className: 'preview-image-box' },
+                    h('img', { src: heroImage.toString(), alt: heroTitle })
+                  ) : null,
+                  h('div', { className: 'preview-body' },
+                    h('span', { className: 'preview-category' }, siteName),
+                    h('h3', { className: 'preview-title' }, heroTitle || tagline),
+                    h('p', { className: 'preview-tagline' }, heroSubtitle),
+                    location ? h('p', { style: { fontSize: '12px', color: '#6b7280', margin: '4px 0 12px 0' } }, '📍 ' + location) : null,
+                    phone ? h('div', { className: 'preview-cta' }, 'WhatsApp: ' + phone) : null
+                  )
+                )
+              );
+            }
+          });
+
+          window.CMS.registerPreviewTemplate('settings', SettingsPreview);
         }
       }
 
