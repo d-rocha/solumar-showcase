@@ -600,9 +600,13 @@
 
       div[class*="ViewControlsSection"],
       div[class*="evv1i7c1"] {
+        position: static !important;
         display: inline-flex !important;
         align-items: center !important;
         margin: 0 !important;
+        top: auto !important;
+        right: auto !important;
+        z-index: auto !important;
       }
 
       /* =========================================================
@@ -804,9 +808,11 @@
         display: none !important;
       }
 
-      /* ViewControls (Preview Eye Toggle Button): Integrated cleanly into Editor Toolbar */
-      div[class*="ViewControls"],
-      div[class*="e1nx103k0"] {
+      /* ViewControls (Preview Eye Toggle Button ONLY in Editor): Integrated cleanly into Editor Toolbar */
+      div[class*="Editor"] div[class*="e1nx103k0"],
+      div[class*="EditorContainer"] div[class*="e1nx103k0"],
+      div[class*="Editor"] div[class*="ViewControls"]:not([class*="ViewControlsSection"]),
+      div[class*="EditorContainer"] div[class*="ViewControls"]:not([class*="ViewControlsSection"]) {
         position: fixed !important;
         top: 70px !important;
         right: max(16px, calc((100vw - 1280px) / 2 + 16px)) !important;
