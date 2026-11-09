@@ -1318,6 +1318,12 @@
         display: none !important;
       }
 
+      /* Never show Decap CMS default login page */
+      #solumar-auth-gate:not(.is-authenticated) ~ #nc-root section[class*="StyledAuthenticationPage"],
+      #solumar-auth-gate:not(.is-authenticated) ~ #nc-root .css-no93ty-StyledAuthenticationPage {
+        display: none !important;
+      }
+
       .auth-card {
         width: 100%;
         max-width: 440px;
@@ -2450,10 +2456,13 @@
       }
 
       function isUserAuthenticated() {
-        return (
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const hasAuthKey = (
           localStorage.getItem(AUTH_KEY) === 'authenticated' ||
           sessionStorage.getItem(AUTH_KEY) === 'authenticated'
         );
+        if (isLocal) return hasAuthKey;
+        return hasAuthKey && !!localStorage.getItem('decap-cms-user');
       }
 
       function setAuthenticated(remember) {
@@ -2467,6 +2476,8 @@
       function clearAuthentication() {
         localStorage.removeItem(AUTH_KEY);
         sessionStorage.removeItem(AUTH_KEY);
+        localStorage.removeItem('decap-cms-user');
+        localStorage.removeItem('netlify-cms-user');
       }
 
       function initAuthGate() {
@@ -2504,13 +2515,70 @@
           e.preventDefault();
           const entered = pwdInput?.value.trim() || '';
           const hashed = await sha256(entered);
+          const submitBtn = form.querySelector('button[type="submit"]');
 
           if (hashed === VALID_HASH || entered === 'solumar2026' || entered === 'solumar') {
             if (errorMsg) errorMsg.style.display = 'none';
-            setAuthenticated(rememberCb ? rememberCb.checked : true);
-            gate.classList.add('is-authenticated');
+
+            const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+            if (!isLocal) {
+              if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Autenticando...';
+              }
+              try {
+                const res = await fetch('/api/session', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ password: entered })
+                });
+                const data = await res.json();
+                if (data.token) {
+                  const userObj = {
+                    backendName: 'github',
+                    token: data.token,
+                    login: data.login || 'solumar-admin',
+                    name: data.name || 'Solumar Admin',
+                    email: data.email || 'contato@solumar.com.br'
+                  };
+                  localStorage.setItem('decap-cms-user', JSON.stringify(userObj));
+                  localStorage.setItem('netlify-cms-user', JSON.stringify(userObj));
+                  setAuthenticated(rememberCb ? rememberCb.checked : true);
+                  gate.classList.add('is-authenticated');
+                  window.location.reload();
+                  return;
+                } else {
+                  if (errorMsg) {
+                    errorMsg.innerText = data.error || 'Erro ao conectar ao repositório.';
+                    errorMsg.style.display = 'flex';
+                  }
+                  if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Acessar Backoffice';
+                  }
+                  return;
+                }
+              } catch (err) {
+                if (errorMsg) {
+                  errorMsg.innerText = 'Erro ao conectar ao servidor. Tente novamente.';
+                  errorMsg.style.display = 'flex';
+                }
+                if (submitBtn) {
+                  submitBtn.disabled = false;
+                  submitBtn.innerText = 'Acessar Backoffice';
+                }
+                return;
+              }
+            } else {
+              setAuthenticated(rememberCb ? rememberCb.checked : true);
+              gate.classList.add('is-authenticated');
+            }
           } else {
-            if (errorMsg) errorMsg.style.display = 'flex';
+            if (errorMsg) {
+              errorMsg.innerText = 'Senha incorreta. Tente novamente.';
+              errorMsg.style.display = 'flex';
+            }
             pwdInput?.select();
           }
         });
@@ -2519,11 +2587,7 @@
         logoutBtn?.addEventListener('click', () => {
           if (confirm('Deseja realmente sair e bloquear o painel de administração?')) {
             clearAuthentication();
-            gate.classList.remove('is-authenticated');
-            if (pwdInput) {
-              pwdInput.value = '';
-              setTimeout(() => pwdInput.focus(), 200);
-            }
+            window.location.reload();
           }
         });
       }
