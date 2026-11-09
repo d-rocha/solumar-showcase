@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <title>Painel Decap CMS | Solumar Sports & Lifestyle</title>
+    <title>Solumar | Backoffice</title>
     <link rel="icon" type="image/png" href="/logo.png" />
     <link href="/backoffice/config.yml" type="text/yaml" rel="cms-config-url" />
 
@@ -2393,6 +2393,9 @@
         if (!homeBtn) return;
 
         function updateHomeButtonState() {
+          if (document.title !== 'Solumar | Backoffice') {
+            document.title = 'Solumar | Backoffice';
+          }
           const hash = window.location.hash || '';
           const isEditing = hash.includes('/entries/') || hash.includes('/new');
 
