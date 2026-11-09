@@ -2344,6 +2344,40 @@
       </div>
     </div>
 
+    <!-- Dynamic Decap Base URL Config for Vercel & Custom Domains -->
+    <script>
+      (function() {
+        const originalFetch = window.fetch;
+        window.fetch = async function(...args) {
+          const response = await originalFetch.apply(this, args);
+          const url = typeof args[0] === 'string' ? args[0] : args[0]?.url || '';
+          if (url.includes('config.yml')) {
+            try {
+              const text = await response.text();
+              const origin = window.location.origin;
+              const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+              let updated = text;
+              if (!isLocal) {
+                if (updated.includes('base_url:')) {
+                  updated = updated.replace(/base_url:\s*[^\n\r]+/g, `base_url: ${origin}`);
+                } else {
+                  updated = updated.replace(/backend:/g, `backend:\n  base_url: ${origin}`);
+                }
+              }
+              return new Response(updated, {
+                status: response.status,
+                statusText: response.statusText,
+                headers: response.headers
+              });
+            } catch (e) {
+              return response;
+            }
+          }
+          return response;
+        };
+      })();
+    </script>
+
     <!-- Decap CMS Core Script -->
     <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
 
