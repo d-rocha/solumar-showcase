@@ -33,6 +33,16 @@
     font-family: var(--font-sans);
     color: #171D36;
     background-color: #FAFAF8;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
   }
 }
 

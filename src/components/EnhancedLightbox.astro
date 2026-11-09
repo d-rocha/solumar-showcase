@@ -35,7 +35,7 @@ const productsPayload = JSON.stringify(
   role="dialog"
   aria-modal="true"
   aria-label="Galeria de fotos do produto"
-  class="pointer-events-none fixed inset-0 z-50 flex h-dvh max-h-dvh w-screen max-w-full flex-col overflow-hidden opacity-0 transition-opacity duration-300 bg-brand-navy/95 backdrop-blur-md select-none"
+  class="pointer-events-none fixed inset-0 z-50 flex h-dvh max-h-dvh w-full flex-col overflow-hidden opacity-0 invisible transition-opacity duration-300 bg-brand-navy/95 backdrop-blur-md select-none"
   data-products={productsPayload}
   data-whatsapp={whatsappNumber}
 >
@@ -312,14 +312,14 @@ const productsPayload = JSON.stringify(
 
       renderCurrentView();
 
-      modal?.classList.remove('pointer-events-none', 'opacity-0');
+      modal?.classList.remove('pointer-events-none', 'opacity-0', 'invisible');
       modal?.classList.add('opacity-100');
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
     }
 
     function closeModal() {
-      modal?.classList.add('pointer-events-none', 'opacity-0');
+      modal?.classList.add('pointer-events-none', 'opacity-0', 'invisible');
       modal?.classList.remove('opacity-100');
       document.body.style.overflow = '';
       document.documentElement.style.overflow = '';

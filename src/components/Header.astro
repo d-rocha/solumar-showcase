@@ -98,7 +98,7 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
   <!-- Mobile Slide-over Drawer -->
   <div
     id="mobile-drawer"
-    class="pointer-events-none fixed inset-0 z-50 flex transition-opacity duration-300 opacity-0"
+    class="pointer-events-none fixed inset-0 z-50 flex transition-opacity duration-300 opacity-0 overflow-hidden invisible"
   >
     <!-- Backdrop -->
     <div id="mobile-backdrop" class="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm"></div>
@@ -173,7 +173,7 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
     if (!btn || !drawer) return;
 
     function openMenu() {
-      drawer?.classList.remove('pointer-events-none', 'opacity-0');
+      drawer?.classList.remove('pointer-events-none', 'opacity-0', 'invisible');
       drawer?.classList.add('opacity-100');
       drawer?.querySelector('div.relative')?.classList.remove('translate-x-full');
       drawer?.querySelector('div.relative')?.classList.add('translate-x-0');
@@ -182,7 +182,7 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle } = Astro.props;
     }
 
     function closeMenu() {
-      drawer?.classList.add('pointer-events-none', 'opacity-0');
+      drawer?.classList.add('pointer-events-none', 'opacity-0', 'invisible');
       drawer?.classList.remove('opacity-100');
       drawer?.querySelector('div.relative')?.classList.add('translate-x-full');
       drawer?.querySelector('div.relative')?.classList.remove('translate-x-0');
