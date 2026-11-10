@@ -15,7 +15,7 @@ const { phone, whatsappUrl, instagramUrl, instagramHandle, announcement, locatio
   {announcement && (
     <div class="bg-brand-navy py-2 text-center text-xs font-semibold uppercase tracking-wider text-brand-sand">
       <div class="mx-auto flex max-w-7xl items-center justify-center gap-2 px-4">
-        <span class="inline-block h-1.5 w-1.5 rounded-full bg-brand-lime animate-pulse"></span>
+        <span class="hidden md:inline-block h-1.5 w-1.5 rounded-full bg-brand-lime"></span>
         <span>{announcement} {location ? `· Entregamos para todo o Brasil direto de ${location}` : ''}</span>
       </div>
     </div>
